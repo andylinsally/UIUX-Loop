@@ -24,7 +24,7 @@
         <div class="nav-menu">
           <div class="nav-card">
             <ul class="nav-list">
-              <li class="nav-item active"><a href="#hero">首頁</a></li>
+              <li class="nav-item"><a href="#hero">首頁</a></li>
               <li class="nav-item"><a href="#pain-points">痛點洞察</a></li>
               <li class="nav-item"><a href="#features">核心功能</a></li>
               <li class="nav-item"><a href="#strategy">設計策略</a></li>
@@ -313,6 +313,39 @@
           // 點擊任何連結時，將 checkbox 設為不勾選，選單就會自動收起
           menuControl.checked = false;
         });
+      });
+
+      // 1. 選取所有的 Section 和 導覽連結
+      const sections = document.querySelectorAll("section[id]");
+      const navItems = document.querySelectorAll(".nav-item a");
+
+      // 2. 設定觀察器參數：當區塊佔據螢幕 50% 以上時觸發
+      const options = {
+        threshold: 0.5,
+      };
+
+      // 3. 建立觀察器邏輯
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // 取得當前區塊的 ID
+            const id = entry.target.getAttribute("id");
+
+            // 移除所有連結的變色標籤
+            navItems.forEach((link) => {
+              link.classList.remove("active-section");
+              // 找到對應的連結並加上變色標籤
+              if (link.getAttribute("href") === `#${id}`) {
+                link.classList.add("active-section");
+              }
+            });
+          }
+        });
+      }, options);
+
+      // 4. 開始監視每個 Section
+      sections.forEach((section) => {
+        observer.observe(section);
       });
     </script>
   </body>

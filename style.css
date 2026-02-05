@@ -55,17 +55,17 @@ body {
 }
 
 .logo-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none; /* 移除底線 */
-    color: inherit;       /* 繼承原本 span 的顏色 */
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none; /* 移除底線 */
+  color: inherit; /* 繼承原本 span 的顏色 */
+  cursor: pointer;
 }
 
 .logo-link:hover {
-    opacity: 0.8; /* 增加一點點滑鼠移入的回饋感 */
-    transition: 0.3s;
+  opacity: 0.8; /* 增加一點點滑鼠移入的回饋感 */
+  transition: 0.3s;
 }
 
 .logo img {
@@ -100,29 +100,33 @@ body {
 }
 
 /* --- 4. 手機版選單選單內容 --- */
-/* 1. 外層容器：確保占滿全螢幕高度，背景透明度可依喜好調整 */
+
 .nav-menu {
-  display: none;
   position: fixed;
   top: 70px; /* 對齊 Header 高度 */
   left: 0;
   width: 100%;
-  height: calc(100vh - 70px);
-  background-color: rgba(0, 0, 0, 0.4); /* 背景變深，更像圖中的遮罩感 */
+  height: 100vh;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0); /* 初始遮罩透明 */
   z-index: 999;
+  transition: background-color 0.4s ease; /* 遮罩顏色過渡 */
+  pointer-events: none; /* 關閉時不影響下方頁面點擊 */
+  visibility: hidden;
 }
 
 /* 2. 核心卡片：寬度占一半(50%)、靠左貼邊、移除邊距 */
 .nav-card {
   background-color: #ffffff;
-  width: 100%; /* 寬度改為螢幕一半 */
-  height: fit-content; /* 根據內容自動伸縮高度 */
-  padding: 40px 40px; /* 增加上下內距，左右留給 link 自己控制 */
-  border-radius: 0 0 40px 40px; /* 只留右下角的圓角，使其與頂部/左側無縫銜接 */
+  width: 100%;
+  height: fit-content;
+  padding: 40px 40px;
+  border-radius: 0 0 40px 40px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
-
-  /* 移除外邊距，確保貼邊 */
   margin: 0;
+  /* 動畫核心：初始狀態向上位移並隱藏 */
+  transform: translateY(-100%);
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); /* 使用優雅的曲線 */
 }
 
 /* 3. 清除預設樣式 (黑點與底線) */
@@ -130,6 +134,12 @@ body {
   list-style: none; /* 移除黑點 */
   padding: 0;
   margin: 0;
+}
+
+.nav-item {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.4s ease;
 }
 
 .nav-item a {
@@ -141,6 +151,13 @@ body {
   transition: all 0.1s ease;
   text-align: center; /* 文字置中 */
   border-radius: 16px;
+}
+
+/* 當區塊被聚焦時，對應連結的樣式 */
+.nav-item a.active-section {
+    color: var(--main-color) !important;
+    background-color: #fff5f4 !important;
+    font-weight: bold;
 }
 
 /* 4. Hover 與 Active 狀態：比照圖二 */
@@ -191,7 +208,15 @@ body {
 
 /* --- 5. 點擊開合邏輯 --- */
 .menu-control:checked ~ .nav-menu {
-  display: flex; /* 當 checkbox 被勾選時顯示選單 */
+  visibility: visible;
+  height: calc(100vh - 70px); /* 展開容器高度 */
+  background-color: rgba(0, 0, 0, 0.4); /* 遮罩變深 */
+  pointer-events: auto; /* 開放點擊 */
+}
+
+.menu-control:checked ~ .nav-menu .nav-card {
+  /* 動畫核心：回到原位 */
+  transform: translateY(0);
 }
 
 /* 漢堡變 X 動畫 */
@@ -203,6 +228,29 @@ body {
 }
 .menu-control:checked ~ .menu-toggle span:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* 選單展開後，文字滑入並顯現 */
+.menu-control:checked ~ .nav-menu .nav-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 設定每個選項的延遲，產生階梯式效果 */
+.nav-item:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.nav-item:nth-child(2) {
+  transition-delay: 0.15s;
+}
+.nav-item:nth-child(3) {
+  transition-delay: 0.2s;
+}
+.nav-item:nth-child(4) {
+  transition-delay: 0.25s;
+}
+.nav-item:nth-child(5) {
+  transition-delay: 0.3s;
 }
 
 /* Hero Section 容器 */
