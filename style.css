@@ -34,6 +34,10 @@ body {
   line-height: 1.6;
 }
 
+i {
+  font-size: 20px;
+}
+
 /* --- 2. Header & Navbar 基礎 --- */
 .header {
   width: 100%;
@@ -353,7 +357,7 @@ body {
 
 /* 標題區樣式 */
 .section-header {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .section-header h2 {
@@ -393,12 +397,13 @@ body {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  flex-shrink: 0;
+  
 }
 
-.card-icon img {
-  width: 30px;
-  height: 30px;
-  filter: brightness(0) invert(1); /* 如果圖示是黑色的，這行能把它變白色 */
+.card-icon i {
+  font-size: 30px;
+  color: white; /* 如果圖示是黑色的，這行能把它變白色 */
 }
 
 /* 卡片標題與內文 */
@@ -414,75 +419,55 @@ body {
   line-height: 1.6;
 }
 
+
 /* 核心功能總容器 */
 .features {
   padding: 60px 25px;
   background-color: var(--bg-color);
 }
 
-/* 每一組功能的間距 */
-.feature-item {
-  margin-bottom: 80px; /* 每一組之間留大一點的空白 */
+
+/* 浮動卡片樣式 */
+.floating-card {
+  position: absolute;
+  bottom: 20px; /* 距離底部距離 */
+  left: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.85); /* 半透明白 */
+  backdrop-filter: blur(10px); /* 毛玻璃效果 */
+  padding: 20px;
+  border-radius: 24px;
+  display: flex;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* 標籤基礎樣式 */
-.feature-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
-  border-radius: 12px;
+/* 卡片內的微型標籤 */
+.mini-tag {
   font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-weight: 800;
+  color: var(--main-color);
   letter-spacing: 1px;
+  display: block;
+  margin-bottom: 2px;
 }
 
-/* 分別設定標籤顏色 */
-.tag-see {
-  background-color: #fff5f4;
-  color: var(--main-color);
-}
-
-.tag-verify {
-  background-color: #e8f4f6;
-  color: var(--sub-color);
-}
-.tag-get {
-  background-color: #fff5f4;
-  color: var(--main-color);
-}
-
-.tag-verify svg {
-  stroke: var(--sub-color);
-}
-.tag-see svg,
-.tag-get svg {
-  stroke: var(--main-color);
-}
-
-/* 功能標題 */
-.feature-title {
-  font-size: 26px;
-  color: var(--primary-text);
-  line-height: 1.4;
-  margin-bottom: 15px;
-}
-
-/* 功能描述 */
-.feature-desc {
-  font-size: 16px;
-  color: var(--secondary-text);
-  line-height: 1.8;
-  margin-bottom: 30px;
-}
-
-/* 功能大圖 */
-.feature-img img {
+/* 增加區塊間的距離 */
+.mockup-container {
+  position: relative;
+  display: flex;
+  flex-direction: column; /* 垂直排列手機與卡片 */
+  align-items: center;    /* 核心：確保所有元件水平居中對齊 */
   width: 100%;
-  border-radius: 40px; /* 圖片的大圓角 */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); /* 柔和陰影 */
+  margin: 0 auto; 
+  margin-bottom: 32px;    
+  max-width: 1200px;    /* 容器本身置中 */
 }
+
+
+
+
 
 /* 區塊基礎設定 */
 .strategy {
@@ -563,17 +548,6 @@ input[name="strategy-select"] {
 
 /* --- 核心互動邏輯 --- */
 
-/* 確保 SVG 會繼承父層的顏色 */
-.tab-icon svg {
-  width: 24px;
-  height: 24px;
-  transition: 0.3s;
-  background-color: transparent;
-  fill: none !important;
-  stroke: currentColor;
-  stroke-width: 2px;
-}
-
 /* 1. 選中時的紅框樣式 */
 #strat1:checked ~ .strategy-tabs .item1,
 #strat2:checked ~ .strategy-tabs .item2,
@@ -602,7 +576,7 @@ input[name="strategy-select"] {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin: 20px 0;
+  margin-top: 20px;
 }
 
 /* 單個點的預設樣式（灰色、圓點） */
@@ -626,20 +600,19 @@ input[name="strategy-select"] {
 
 /* 2. 手機圖片切換邏輯 */
 .strategy-display {
-  margin-top: 40px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 }
 
 .phone-frame {
-  width: 280px;
+  width: 350px;
   position: relative;
 }
 
 .phone-frame img {
   width: 100%;
   border-radius: 30px;
-  border: 8px solid #333; /* 模擬手機邊框 */
   display: none; /* 預設全部隱藏 */
 }
 
@@ -664,6 +637,9 @@ input[name="strategy-select"] {
 .tag-vision {
   background-color: #fff5f4;
   color: var(--main-color);
+  border-radius: 99px;
+  padding: 4px 16px ;
+width: fit-content;
 }
 
 .vision-title {
