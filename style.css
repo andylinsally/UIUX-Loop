@@ -168,14 +168,8 @@ i {
   transition: 0.3s;
 }
 
-.logo img {
-  height: 32px;
-}
-
-.logo span {
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--primary-text);
+.logo-link img {
+  height: 48px;
 }
 
 /* --- 3. 漢堡按鈕樣式 --- */
@@ -193,8 +187,9 @@ i {
 
 .menu-toggle span {
   display: block;
-  width: 25px;
+  width: 20px;
   height: 2px;
+  border-radius: 999px;
   background-color: var(--secondary-text);
   transition: 0.3s;
 }
@@ -1978,5 +1973,14 @@ input[name="strategy-select"] {
 
   .copyright {
     order: 1; /* 讓版權在左邊 */
+  }
+}
+
+@media (hover: none) {
+  /* 這裡強制讓「手機觸控」時不要有任何變暗濾鏡 */
+  .mockup-img,
+  .hero-mockup:hover .mockup-img.front,
+  .hero-mockup:hover .mockup-img.back {
+    filter: brightness(1) !important;
   }
 }
