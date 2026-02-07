@@ -368,13 +368,14 @@ i {
 /* 小標籤 */
 .badge {
   display: inline-block;
-  background-color: #ffe8e4;
-  color: var(--main-color);
-  padding: 4px 12px;
+  background-color:  var(--main-color);
+  color: #fff;
+  padding: 8px 16px;
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 20px;
+  line-height: 1;
 }
 
 /* 標題與 Icon 的包裝層 */
@@ -815,11 +816,14 @@ input[name="strategy-select"] {
 }
 
 .tag-vision {
-  background-color: #fff5f4;
+  background-color: transparent;
   color: var(--main-color);
+  border: var(--main-color) 1px solid;
   border-radius: 99px;
   padding: 4px 16px;
   width: fit-content;
+  line-height: 1;
+  padding: 8px 16px;
 }
 
 .vision-title {
