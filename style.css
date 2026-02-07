@@ -1118,7 +1118,7 @@ input[name="strategy-select"] {
 
   /* --- 2. 最終導購區 --- */
   .final-cta {
-    padding: 100px 60px;
+    padding: 100px 40px;
   }
 
   .cta-card {
@@ -1156,7 +1156,7 @@ input[name="strategy-select"] {
 
   /* --- Footer 容器優化 --- */
   .footer {
-    padding: 80px 60px 40px; /* 增加頂部間距 */
+    padding: 80px 40px 40px; /* 增加頂部間距 */
     text-align: left; /* 預設靠左對齊 */
   }
 
