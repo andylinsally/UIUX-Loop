@@ -365,19 +365,6 @@ i {
   text-align: left;
 }
 
-/* 小標籤 */
-.badge {
-  display: inline-block;
-  background-color:  var(--main-color);
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 20px;
-  line-height: 1;
-}
-
 /* 標題與 Icon 的包裝層 */
 .hero-main {
   display: flex;
