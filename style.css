@@ -69,7 +69,7 @@ body {
 
 /* 個別色塊設定 (參考你 Loop App 的主色調) */
 .blob-1 {
-  background: rgba(251, 138, 120, 1); 
+  background: rgba(251, 138, 120, 1);
   top: -20%;
   left: -10%;
   animation: move1 35s infinite ease-in-out alternate;
@@ -1130,7 +1130,7 @@ input[name="strategy-select"] {
     transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
   }
 
-/* --- 2. 最終導購區 --- */
+  /* --- 2. 最終導購區 --- */
   .final-cta {
     padding: 100px 60px;
   }
@@ -1224,7 +1224,6 @@ input[name="strategy-select"] {
   .copyright {
     order: 1; /* 讓版權在左邊 */
   }
-
 }
 
 /*============ 平板橫屏 =============*/
@@ -1241,7 +1240,7 @@ input[name="strategy-select"] {
     padding: 60px 60px;
   }
 
-.vision-img img {
+  .vision-img img {
     max-height: 500px;
     object-fit: cover;
   }
@@ -1286,6 +1285,10 @@ input[name="strategy-select"] {
 
   .nav-card .download-btn {
     display: none; /* 桌面版我們通常讓下載按鈕獨立在 Navbar 右側 */
+  }
+
+  .download-btn span {
+    line-height: 1;
   }
 
   /* 確保原本在 Navbar 裡的下載按鈕是顯示的 */
@@ -1406,7 +1409,7 @@ input[name="strategy-select"] {
     transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
   }
 
-/* --- 2. 最終導購區 --- */
+  /* --- 2. 最終導購區 --- */
   .final-cta {
     padding: 100px 60px;
   }
@@ -1500,7 +1503,6 @@ input[name="strategy-select"] {
   .copyright {
     order: 1; /* 讓版權在左邊 */
   }
-
 }
 
 /*============ 桌機 =============*/
@@ -1544,6 +1546,10 @@ input[name="strategy-select"] {
 
   .nav-card .download-btn {
     display: none; /* 桌面版我們通常讓下載按鈕獨立在 Navbar 右側 */
+  }
+
+  .download-btn span {
+    line-height: 1;
   }
 
   /* 確保原本在 Navbar 裡的下載按鈕是顯示的 */
