@@ -423,7 +423,7 @@ i {
 .hero-mockup {
   position: relative;
   width: 100%;
-  height: 550px; /* 預留足夠高度給交疊的手機 */
+  height: 500px; /* 預留足夠高度給交疊的手機 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1081,8 +1081,8 @@ input[name="strategy-select"] {
   }
 
   .mockup-img {
-    top: 10%;
-    left: 25%;
+    top: 5%;
+    left: 20%;
     width: 230px; /* 依需求調整 */
   }
 
@@ -1360,7 +1360,7 @@ input[name="strategy-select"] {
   }
 
   .mockup-img {
-    top: 10%;
+    top: 5%;
     left: 25%;
     width: 230px; /* 依需求調整 */
   }
@@ -1617,7 +1617,7 @@ input[name="strategy-select"] {
     flex: 1; /* 佔據右側空間 */
     margin: 0; /* 移除手機版的負邊距 */
     justify-content: flex-end;
-    height: 600px; /* 增加高度，給予更多空間 */
+    height: 680px; /* 增加高度，給予更多空間 */
   }
 
   .mockup-img {
