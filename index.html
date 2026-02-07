@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="gradient-bg">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
     <header class="header">
       <nav class="navbar">
         <a href="#hero" class="logo-link">
@@ -55,11 +61,8 @@
             <img src="./img/app-logo.png" alt="Loop App Icon" />
           </div>
           <h1 class="hero-title">
-            縮短從<span class="highlight"> 靈感</span> 到<span
-              class="highlight"
-            >
-              擁有 </span
-            >的最短路徑
+            縮短從<span class="highlight"> 靈感 </span>到
+            <span class="highlight"> 擁有 </span>的最短路徑
           </h1>
         </div>
 
@@ -72,7 +75,12 @@
       </div>
 
       <div class="hero-mockup">
-        <img src="./gif/hero.gif" alt="Loop App Mockup" />
+        <div class="mockup-img back">
+          <img src="./img/D-貼文-文章-購物.png" alt="App Screen" />
+        </div>
+        <div class="mockup-img front">
+          <img src="./img/D-首頁.png" alt="App Screen" />
+        </div>
       </div>
     </section>
 
@@ -399,6 +407,13 @@
       // 4. 開始監視每個 Section
       sections.forEach((section) => {
         observer.observe(section);
+      });
+
+      // 在你原有的 <script> 標籤中加入
+      const heroMockup = document.querySelector(".hero-mockup");
+
+      heroMockup.addEventListener("click", () => {
+        heroMockup.classList.toggle("is-swapped");
       });
     </script>
   </body>

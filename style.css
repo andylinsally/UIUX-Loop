@@ -1,14 +1,3 @@
-html {
-  /* 讓點擊連結後的捲動過程變得平滑 */
-  scroll-behavior: smooth;
-}
-
-/* 考慮到你使用了 fixed header (高度 70px)，
-   為了避免捲動後標題被 Header 遮住，我們加上捲動補償 */
-section {
-  scroll-margin-top: 70px;
-}
-
 /* --- 1. 變數與重設 --- */
 :root {
   --bg-color: #fdfcf8;
@@ -27,11 +16,118 @@ section {
   box-sizing: border-box;
 }
 
+html,
+body {
+  overflow-x: hidden; /* 禁止水平捲動，消除右側白邊 */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* 讓點擊連結後的捲動過程變得平滑 */
+  scroll-behavior: smooth;
+}
+
+/* 考慮到你使用了 fixed header (高度 70px)，
+   為了避免捲動後標題被 Header 遮住，我們加上捲動補償 */
+section {
+  scroll-margin-top: 70px;
+}
+
 body {
   font-family: -apple-system, sans-serif;
   color: var(--primary-text);
   line-height: 1.6;
+}
+
+/* 背景總容器 */
+.gradient-bg {
+  position: fixed; /* 固定在最底層 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1; /* 確保在所有內容後方 */
+  /* 修正：使用 background 才能支援漸層 */
   background: linear-gradient(180deg, #fff5f3 0%, #fdfcf8 100%);
+  overflow: hidden;
+  /* 液態黑魔法：先大幅模糊，再用高對比度擠壓邊緣 */
+}
+
+/* 光暈球通用樣式 */
+.blob {
+  position: absolute;
+  width: 60vw; /* 改用視窗比例，讓它在不同螢幕都夠大 */
+  height: 60vw;
+  border-radius: 50%;
+  opacity: 0.5;
+  mix-blend-mode: hard-light;
+  filter: blur(80px);
+  transition: all 0.5s ease;
+}
+
+/* 個別色塊設定 (參考你 Loop App 的主色調) */
+.blob-1 {
+  background: rgba(251, 138, 120, 1); 
+  top: -20%;
+  left: -10%;
+  animation: move1 35s infinite ease-in-out alternate;
+}
+
+.blob-2 {
+  background: rgba(118, 182, 196, 1);
+  bottom: -20%;
+  right: -10%;
+  animation: move2 40s infinite ease-in-out alternate;
+}
+
+.blob-3 {
+  background: rgba(255, 232, 228, 1);
+  top: 30%;
+  left: 20%;
+  /* 修正：將 3s 改為 30s，流動感才會出來 */
+  animation: move3 30s infinite ease-in-out alternate;
+}
+
+/* 不規則運動動畫 */
+@keyframes move1 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translate(15vw, 15vh) rotate(60deg) scale(1.1);
+  }
+  66% {
+    transform: translate(5vw, 30vh) rotate(120deg) scale(0.9);
+  }
+  100% {
+    transform: translate(-10vw, 10vh) rotate(180deg) scale(1);
+  }
+}
+
+@keyframes move2 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(-25vw, -15vh) rotate(-180deg) scale(1.2);
+  }
+  100% {
+    transform: translate(10vw, -20vh) rotate(-360deg) scale(1);
+  }
+}
+
+@keyframes move3 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(20vw, -10vh) scale(1.4);
+  }
+  100% {
+    transform: translate(-10vw, 15vh) scale(1);
+  }
 }
 
 i {
@@ -340,23 +436,113 @@ i {
 }
 
 /* 手機模擬圖 */
+/* Hero Mockup 容器設定 */
 .hero-mockup {
-  margin-top: 50px;
-  margin-left: -25px; /* 抵銷 parent padding 讓圖稍微出框或靠邊 */
-  margin-right: -25px;
+  position: relative;
+  width: 100%;
+  height: 550px; /* 預留足夠高度給交疊的手機 */
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  overflow: visible; /* 確保外框與陰影能顯示出來 */
 }
 
-.hero-mockup img {
+.mockup-img {
+  position: absolute;
+  top: 0;
+  left: 20%;
+  width: 200px; /* 依需求調整 */
+  aspect-ratio: 9 / 19.5;
+  box-sizing: border-box;
+  overflow: hidden; /* 這一行很重要，讓圖片乖乖待在手機邊框內 */
+  /* --- 手機外框核心樣式 --- */
+  background-color: #000;
+  border: 6px solid #3d3d3d; /* 手機黑邊邊框 */
+  border-radius: 40px; /* 外框圓角 */
+  outline: 2px solid #333; /* 模擬金屬中框的細線 */
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.2),
+    inset 0 0 10px rgba(255, 255, 255, 0.1); /* 內陰影增加厚度感 */
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* 增加一點回彈感 */
+  cursor: pointer;
+}
+
+/* --- 修正圖片內容的圓角 --- */
+/* 因為外框有厚度，我們需要確保圖片本身不會超出圓角 */
+.mockup-img img {
   width: 100%;
-  max-width: 400px; /* 限制手機版圖不要過大 */
+  height: 100%;
+  border-radius: 32px; /* 比外框稍微小一點的圓角 */
+  display: block;
+  object-fit: cover;
+}
+
+/* --- 製作手機劉海/動態島 --- */
+.mockup-img::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 18px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  z-index: 10;
+}
+
+/* 後方圖片：往左上偏移，傾斜角度較大 */
+.mockup-img.back {
+  z-index: 1;
+  transform: translate(-30px, 40px) rotate(-5deg) scale(0.95);
+  filter: brightness(0.8); /* 稍微調暗增加深度感 */
+}
+
+/* 前方圖片：往右下偏移，傾斜角度較小（較正） */
+.mockup-img.front {
+  z-index: 2;
+  transform: translate(30px, 40px) rotate(5deg);
+  filter: brightness(1);
+}
+
+/* 滑鼠滑入或頁面加載時的動態效果（選配） */
+.hero-mockup:hover .mockup-img.back {
+  transform: translate(-40px, 40px) rotate(-7deg) scale(0.95);
+  filter: brightness(1);
+}
+
+.hero-mockup:hover .mockup-img.front {
+  filter: brightness(0.7);
+  transform: translate(40px, 40px) rotate(7deg);
+}
+
+/* --- 交換狀態 (.is-swapped) --- */
+/* 當點擊後，我們反轉所有的 transform 與 filter */
+.hero-mockup.is-swapped .mockup-img.back {
+  z-index: 2; /* 變到前方 */
+  transform: translate(30px, 40px) rotate(5deg);
+  filter: brightness(1);
+}
+.hero-mockup.is-swapped .mockup-img.front {
+  z-index: 1; /* 變到後方 */
+  transform: translate(-30px, 40px) rotate(-5deg) scale(0.95);
+  filter: brightness(0.8);
+}
+
+/* 交換狀態下的 Hover：也要反過來 */
+.hero-mockup.is-swapped:hover .mockup-img.back {
+  transform: translate(40px, 40px) rotate(7deg);
+  filter: brightness(0.7);
+}
+.hero-mockup.is-swapped:hover .mockup-img.front {
+  transform: translate(-40px, 40px) rotate(-7deg) scale(0.95);
+  filter: brightness(1);
 }
 
 /* 痛點區塊基礎設定 */
 .pain-points {
   padding: 80px 25px;
-  background: linear-gradient(180deg, #fff5f3 0%, #fdfcf8 100%);
 }
 
 /* 標題區樣式 */
@@ -425,7 +611,6 @@ i {
 /* 核心功能總容器 */
 .features {
   padding: 60px 25px;
-  background-color: var(--bg-color);
 }
 
 /* 浮動卡片樣式 */
@@ -469,7 +654,6 @@ i {
 /* 區塊基礎設定 */
 .strategy {
   padding: 60px 0; /* 左右不留 padding 以便按鈕滑動 */
-  background-color: var(--bg-color);
   overflow: hidden;
 }
 
@@ -624,7 +808,6 @@ input[name="strategy-select"] {
 /* 願景區塊容器 */
 .vision {
   padding: 60px 25px;
-  background-color: var(--bg-color);
 }
 
 .tag-vision svg {
@@ -699,7 +882,6 @@ input[name="strategy-select"] {
 /* 最後導購區樣式 */
 .final-cta {
   padding: 60px 25px;
-  background-color: var(--bg-color);
 }
 
 .cta-card {
@@ -840,13 +1022,493 @@ input[name="strategy-select"] {
   color: #808080;
 }
 
-/* --- 桌面/平板 RWD 修正 (768px 以上) --- */
-@media (min-width: 768px) {
+/*============ 平板 =============*/
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* --- Hero 區塊桌面化 --- */
+  .navbar,
+  .pain-points,
+  .strategy .section-header {
+    padding: 0 40px;
+  }
+
+  .features,
+  .vision,
+  .final-cta {
+    padding: 60px 40px;
+  }
+
+  .vision-img img {
+    max-height: 300px;
+    object-fit: cover;
+  }
+
+  .hero {
+    display: flex;
+    align-items: center; /* 垂直置中 */
+    justify-content: space-between;
+    padding: 100px 40px 80px; /* 增加上下間距 */
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left; /* 確保文字靠左 */
+  }
+
+  .hero-content {
+    flex: 1; /* 佔據左側空間 */
+  }
+
+  .hero-main {
+    flex-direction: column; /* 在桌面版讓標題與 App Icon 回到上下排列 */
+    align-items: flex-start;
+    margin-bottom: 30px;
+  }
+
+  .hero-title {
+    font-size: 56px; /* 標題放大，更有張力 */
+    line-height: 1.2;
+  }
+
+  .app-icon {
+    margin-top: 20px;
+  }
+
+  .app-icon img {
+    width: 100px; /* 縮小 Icon，不要搶了標題風頭 */
+    height: 100px;
+  }
+
+  .hero-desc {
+    font-size: 18px;
+    max-width: 500px; /* 限制文字寬度，方便閱讀 */
+  }
+
+  .cta-btn {
+    width: fit-content; /* 按鈕不再撐滿，依文字寬度 */
+    padding: 16px 40px;
+  }
+
+  /* 右側手機模擬圖 */
+  .hero-mockup {
+    flex: 1; /* 佔據右側空間 */
+    margin: 0; /* 移除手機版的負邊距 */
+    justify-content: flex-end;
+    height: 600px; /* 增加高度，給予更多空間 */
+  }
+
+  .mockup-img {
+    top: 10%;
+    left: 25%;
+    width: 230px; /* 依需求調整 */
+  }
+
+  .mockup-img.back {
+    transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
+  }
+
+  .mockup-img.front {
+    transform: translate(40px, 40px) rotate(8deg);
+  }
+
+  .hero-mockup:hover .mockup-img.back {
+    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
+  }
+
+  .hero-mockup:hover .mockup-img.front {
+    transform: translate(50px, 40px) rotate(10deg);
+  }
+
+  .hero-mockup.is-swapped .mockup-img.back {
+    transform: translate(40px, 40px) rotate(8deg);
+  }
+  .hero-mockup.is-swapped .mockup-img.front {
+    transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
+  }
+
+  .hero-mockup.is-swapped:hover .mockup-img.back {
+    transform: translate(50px, 40px) rotate(10deg);
+  }
+  .hero-mockup.is-swapped:hover .mockup-img.front {
+    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
+  }
+
+/* --- 2. 最終導購區 --- */
+  .final-cta {
+    padding: 100px 60px;
+  }
+
+  .cta-card {
+    max-width: 1200px; /* 限制卡片寬度 */
+    margin: 0 auto;
+    padding: 80px 40px;
+    border-radius: 50px; /* 更圓潤的角 */
+  }
+
+  .cta-card h2 {
+    font-size: 48px; /* 標題加強 */
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  .cta-card p {
+    font-size: 20px;
+    margin-bottom: 48px;
+  }
+
+  /* 按鈕改為橫向排列 */
+  .cta-btns {
+    flex-direction: row; /* 關鍵：轉為橫向 */
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .download-white,
+  .learn-more-outline {
+    width: 220px; /* 固定按鈕寬度 */
+    margin: 0;
+    padding: 18px;
+    font-size: 16px;
+  }
+
+  /* --- Footer 容器優化 --- */
+  .footer {
+    padding: 80px 60px 40px; /* 增加頂部間距 */
+    text-align: left; /* 預設靠左對齊 */
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* 上半部：Logo、Slogan、Social Icons */
+  /* 我們可以維持原 HTML，透過控制子元素達成佈局 */
+
+  .footer-logo {
+    justify-content: flex-start; /* Logo 靠左 */
+    margin-bottom: 20px;
+  }
+
+  .footer-slogan {
+    text-align: left;
+    margin-left: 0;
+    max-width: 400px; /* 限制寬度，避免文字拉太長 */
+    margin-bottom: 30px;
+  }
+
+  .social-icons {
+    justify-content: flex-start; /* 按鈕靠左 */
+    gap: 20px;
+  }
+
+  /* 分隔線 */
+  .footer-divider {
+    max-width: 1200px;
+    margin: 40px auto 30px;
+    opacity: 0.1; /* 讓線條淡一點，更高級 */
+  }
+
+  /* 下半部：法律條款與版權 (左右分立) */
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between; /* 關鍵：一左一右 */
+    align-items: center;
+    flex-direction: row; /* 確保是橫向 */
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-legal {
+    margin-bottom: 0; /* 移除手機版的底距 */
+    order: 2; /* 讓條款在右邊 */
+  }
+
+  .copyright {
+    order: 1; /* 讓版權在左邊 */
+  }
+
+}
+
+/*============ 平板橫屏 =============*/
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .navbar,
+  .pain-points,
+  .strategy .section-header {
+    padding: 0 60px;
+  }
+
+  .features,
+  .vision,
+  .final-cta {
+    padding: 60px 60px;
+  }
+
+.vision-img img {
+    max-height: 500px;
+    object-fit: cover;
+  }
+
   /* 1. Navbar 配置調整 */
   .navbar {
     max-width: 1200px; /* 限制導覽列最大寬度 */
     margin: 0 auto;
     padding: 0 60px;
+    position: relative;
+  }
+
+  /* 2. 隱藏手機版漢堡按鈕與 checkbox */
+  .menu-toggle,
+  .menu-control {
+    display: none;
+  }
+
+  /* 3. 恢復選單顯示並轉為橫向 */
+  .nav-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: auto; /* 覆蓋手機版的 top: 70px */
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    visibility: visible;
+    pointer-events: auto;
+    display: block; /* 確保顯示 */
+  }
+
+  .nav-card {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    transform: none; /* 移除位移動畫 */
+    transition: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-card .download-btn {
+    display: none; /* 桌面版我們通常讓下載按鈕獨立在 Navbar 右側 */
+  }
+
+  /* 確保原本在 Navbar 裡的下載按鈕是顯示的 */
+  .navbar > .download-btn {
+    display: flex;
+  }
+
+  .nav-list {
+    display: flex; /* 核心：列表橫排 */
+    gap: 10px;
+  }
+
+  .nav-item {
+    opacity: 1; /* 取消透明度動畫 */
+    transform: none;
+  }
+
+  .nav-item a {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+
+  /* 4. 下載按鈕改為小尺寸 */
+  .navbar .download-btn {
+    margin: 0; /* 移除手機版的上下 margin */
+    width: auto;
+    padding: 10px 25px;
+    font-size: 15px;
+  }
+
+  /* --- Hero 區塊桌面化 --- */
+  .hero {
+    display: flex;
+    align-items: center; /* 垂直置中 */
+    justify-content: space-between;
+    padding: 100px 60px 80px; /* 增加上下間距 */
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left; /* 確保文字靠左 */
+  }
+
+  .hero-content {
+    flex: 1; /* 佔據左側空間 */
+  }
+
+  .hero-main {
+    flex-direction: column; /* 在桌面版讓標題與 App Icon 回到上下排列 */
+    align-items: flex-start;
+    margin-bottom: 30px;
+  }
+
+  .hero-title {
+    font-size: 56px; /* 標題放大，更有張力 */
+    line-height: 1.2;
+  }
+
+  .app-icon {
+    margin-top: 20px;
+  }
+
+  .app-icon img {
+    width: 100px; /* 縮小 Icon，不要搶了標題風頭 */
+    height: 100px;
+  }
+
+  .hero-desc {
+    font-size: 18px;
+    max-width: 500px; /* 限制文字寬度，方便閱讀 */
+  }
+
+  .cta-btn {
+    width: fit-content; /* 按鈕不再撐滿，依文字寬度 */
+    padding: 16px 40px;
+  }
+
+  /* 右側手機模擬圖 */
+  .hero-mockup {
+    flex: 1; /* 佔據右側空間 */
+    margin: 0; /* 移除手機版的負邊距 */
+    justify-content: flex-end;
+    height: 600px; /* 增加高度，給予更多空間 */
+  }
+
+  .mockup-img {
+    top: 10%;
+    left: 25%;
+    width: 230px; /* 依需求調整 */
+  }
+
+  .mockup-img.back {
+    transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
+  }
+
+  .mockup-img.front {
+    transform: translate(40px, 40px) rotate(8deg);
+  }
+
+  .hero-mockup:hover .mockup-img.back {
+    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
+  }
+
+  .hero-mockup:hover .mockup-img.front {
+    transform: translate(50px, 40px) rotate(10deg);
+  }
+
+  .hero-mockup.is-swapped .mockup-img.back {
+    transform: translate(40px, 40px) rotate(8deg);
+  }
+  .hero-mockup.is-swapped .mockup-img.front {
+    transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
+  }
+
+  .hero-mockup.is-swapped:hover .mockup-img.back {
+    transform: translate(50px, 40px) rotate(10deg);
+  }
+  .hero-mockup.is-swapped:hover .mockup-img.front {
+    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
+  }
+
+/* --- 2. 最終導購區 --- */
+  .final-cta {
+    padding: 100px 60px;
+  }
+
+  .cta-card {
+    max-width: 1200px; /* 限制卡片寬度 */
+    margin: 0 auto;
+    padding: 80px 40px;
+    border-radius: 50px; /* 更圓潤的角 */
+  }
+
+  .cta-card h2 {
+    font-size: 48px; /* 標題加強 */
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  .cta-card p {
+    font-size: 20px;
+    margin-bottom: 48px;
+  }
+
+  /* 按鈕改為橫向排列 */
+  .cta-btns {
+    flex-direction: row; /* 關鍵：轉為橫向 */
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .download-white,
+  .learn-more-outline {
+    width: 220px; /* 固定按鈕寬度 */
+    margin: 0;
+    padding: 18px;
+    font-size: 16px;
+  }
+
+  /* --- Footer 容器優化 --- */
+  .footer {
+    padding: 80px 60px 40px; /* 增加頂部間距 */
+    text-align: left; /* 預設靠左對齊 */
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* 上半部：Logo、Slogan、Social Icons */
+  /* 我們可以維持原 HTML，透過控制子元素達成佈局 */
+
+  .footer-logo {
+    justify-content: flex-start; /* Logo 靠左 */
+    margin-bottom: 20px;
+  }
+
+  .footer-slogan {
+    text-align: left;
+    margin-left: 0;
+    max-width: 400px; /* 限制寬度，避免文字拉太長 */
+    margin-bottom: 30px;
+  }
+
+  .social-icons {
+    justify-content: flex-start; /* 按鈕靠左 */
+    gap: 20px;
+  }
+
+  /* 分隔線 */
+  .footer-divider {
+    max-width: 1200px;
+    margin: 40px auto 30px;
+    opacity: 0.1; /* 讓線條淡一點，更高級 */
+  }
+
+  /* 下半部：法律條款與版權 (左右分立) */
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between; /* 關鍵：一左一右 */
+    align-items: center;
+    flex-direction: row; /* 確保是橫向 */
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-legal {
+    margin-bottom: 0; /* 移除手機版的底距 */
+    order: 2; /* 讓條款在右邊 */
+  }
+
+  .copyright {
+    order: 1; /* 讓版權在左邊 */
+  }
+
+}
+
+/*============ 桌機 =============*/
+@media (min-width: 1200px) {
+  /* 1. Navbar 配置調整 */
+  .navbar {
+    max-width: 1200px; /* 限制導覽列最大寬度 */
+    margin: 0 auto;
     position: relative;
   }
 
@@ -963,11 +1625,42 @@ input[name="strategy-select"] {
     flex: 1; /* 佔據右側空間 */
     margin: 0; /* 移除手機版的負邊距 */
     justify-content: flex-end;
+    height: 600px; /* 增加高度，給予更多空間 */
   }
 
-  .hero-mockup img {
-    max-width: 480px; /* 圖片可以放大一點 */
-    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.12)); /* 增加高級感的投影 */
+  .mockup-img {
+    left: 25%;
+    width: 280px; /* 依需求調整 */
+  }
+
+  .mockup-img.back {
+    transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
+  }
+
+  .mockup-img.front {
+    transform: translate(40px, 40px) rotate(8deg);
+  }
+
+  .hero-mockup:hover .mockup-img.back {
+    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
+  }
+
+  .hero-mockup:hover .mockup-img.front {
+    transform: translate(50px, 40px) rotate(10deg);
+  }
+
+  .hero-mockup.is-swapped .mockup-img.back {
+    transform: translate(40px, 40px) rotate(8deg);
+  }
+  .hero-mockup.is-swapped .mockup-img.front {
+    transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
+  }
+
+  .hero-mockup.is-swapped:hover .mockup-img.back {
+    transform: translate(50px, 40px) rotate(10deg);
+  }
+  .hero-mockup.is-swapped:hover .mockup-img.front {
+    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
   }
 
   /* --- 痛點區塊桌面化 --- */
@@ -1171,10 +1864,9 @@ input[name="strategy-select"] {
     text-align: left; /* 恢復靠左對齊 */
   }
 
-.text-content{
-  max-width: 500px; /* 限制文字區寬度，增加閱讀舒適度 */
-}
-
+  .text-content {
+    max-width: 500px; /* 限制文字區寬度，增加閱讀舒適度 */
+  }
 
   /* 圖片區塊 */
   .vision-img {
@@ -1240,10 +1932,9 @@ input[name="strategy-select"] {
     text-align: left; /* 預設靠左對齊 */
   }
 
-.footer-container {
+  .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 40px;
   }
 
   /* 上半部：Logo、Slogan、Social Icons */
