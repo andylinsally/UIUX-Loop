@@ -1,4 +1,4 @@
-/* --- 1. 變數與重設 --- */
+/* --- 1. 全局變數與基礎重設 --- */
 :root {
   --bg-color: #fdfcf8;
   --primary-text: #656565;
@@ -18,21 +18,14 @@
 
 html,
 body {
-  overflow-x: hidden; /* 禁止水平捲動，消除右側白邊 */
+  overflow-x: hidden;
   width: 100%;
   margin: 0;
   padding: 0;
 }
 
 html {
-  /* 讓點擊連結後的捲動過程變得平滑 */
   scroll-behavior: smooth;
-}
-
-/* 考慮到你使用了 fixed header (高度 70px)，
-   為了避免捲動後標題被 Header 遮住，我們加上捲動補償 */
-section {
-  scroll-margin-top: 70px;
 }
 
 body {
@@ -46,7 +39,11 @@ i {
   font-size: 20px;
 }
 
-/* --- 2. Header & Navbar 基礎 --- */
+section {
+  scroll-margin-top: 70px;
+}
+
+/* --- 2. Header & Navbar --- */
 .header {
   width: 100%;
   height: 70px;
@@ -70,13 +67,13 @@ i {
   display: flex;
   align-items: center;
   gap: 10px;
-  text-decoration: none; /* 移除底線 */
-  color: inherit; /* 繼承原本 span 的顏色 */
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
 }
 
 .logo-link:hover {
-  opacity: 0.8; /* 增加一點點滑鼠移入的回饋感 */
+  opacity: 0.8;
   transition: 0.3s;
 }
 
@@ -84,9 +81,9 @@ i {
   height: 48px;
 }
 
-/* --- 3. 漢堡按鈕樣式 --- */
+/* --- 3. 手機版選單邏輯 (Menu & Hamburger) --- */
 .menu-control {
-  display: none; /* 隱藏 checkbox */
+  display: none;
 }
 
 .menu-toggle {
@@ -106,23 +103,20 @@ i {
   transition: 0.3s;
 }
 
-/* --- 4. 手機版選單選單內容 --- */
-
 .nav-menu {
   position: fixed;
-  top: 70px; /* 對齊 Header 高度 */
+  top: 70px;
   left: 0;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0); /* 初始遮罩透明 */
+  background-color: rgba(0, 0, 0, 0);
   z-index: 999;
-  transition: background-color 0.4s ease; /* 遮罩顏色過渡 */
-  pointer-events: none; /* 關閉時不影響下方頁面點擊 */
+  transition: background-color 0.4s ease;
+  pointer-events: none;
   visibility: hidden;
 }
 
-/* 2. 核心卡片：寬度占一半(50%)、靠左貼邊、移除邊距 */
 .nav-card {
   background-color: #ffffff;
   width: 100%;
@@ -131,14 +125,12 @@ i {
   border-radius: 0 0 40px 40px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
   margin: 0;
-  /* 動畫核心：初始狀態向上位移並隱藏 */
   transform: translateY(-100%);
-  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); /* 使用優雅的曲線 */
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-/* 3. 清除預設樣式 (黑點與底線) */
 .nav-list {
-  list-style: none; /* 移除黑點 */
+  list-style: none;
   padding: 0;
   margin: 0;
 }
@@ -150,89 +142,41 @@ i {
 }
 
 .nav-item a {
-  text-decoration: none; /* 移除底線 */
+  text-decoration: none;
   display: block;
-  padding: 16px 32px; /* 增加點擊區域 */
+  padding: 16px 32px;
   font-size: 18px;
   color: var(--secondary-text);
   transition: all 0.1s ease;
-  text-align: center; /* 文字置中 */
+  text-align: center;
   border-radius: 16px;
 }
 
-/* 當區塊被聚焦時，對應連結的樣式 */
 .nav-item a.active-section {
   color: var(--main-color) !important;
   background-color: #fff5f4 !important;
   font-weight: bold;
 }
 
-/* 4. Hover 與 Active 狀態：比照圖二 */
 .nav-item a:hover,
 .nav-item.active a {
   color: var(--main-color);
-  background-color: #fff5f4; /* 淺粉色底 */
-}
-
-/* 下載按鈕微調：置中並保持間距 */
-.nav-card .download-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 30px auto 0;
-  margin-top: 20px;
-  width: 100%;
-  background: var(--main-gradient);
-  color: #fff;
-  padding: 12px 60px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-
-.navbar > .download-btn {
-  display: none;
-}
-
-/* 確保 checkbox 選中時顯示 flex */
-.menu-control:checked ~ .nav-menu {
-  display: flex;
-}
-
-/* 啟動狀態樣式 */
-.nav-item.active a {
-  color: var(--main-color);
   background-color: #fff5f4;
-  padding: 8px 30px;
-  border-radius: 12px;
 }
 
-/* 下載按鈕 */
-.download-btn {
-  margin-top: 20px;
-  text-decoration: none;
-  background: var(--main-gradient);
-  color: #fff;
-  padding: 12px 60px;
-  border-radius: 50px;
-  font-weight: bold;
-}
-
-/* --- 5. 點擊開合邏輯 --- */
+/* 選單狀態連動 */
 .menu-control:checked ~ .nav-menu {
+  display: flex;
   visibility: visible;
-  height: calc(100vh - 70px); /* 展開容器高度 */
-  background-color: rgba(0, 0, 0, 0.4); /* 遮罩變深 */
-  pointer-events: auto; /* 開放點擊 */
+  height: calc(100vh - 70px);
+  background-color: rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
 }
 
 .menu-control:checked ~ .nav-menu .nav-card {
-  /* 動畫核心：回到原位 */
   transform: translateY(0);
 }
 
-/* 漢堡變 X 動畫 */
 .menu-control:checked ~ .menu-toggle span:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
 }
@@ -243,13 +187,11 @@ i {
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* 選單展開後，文字滑入並顯現 */
 .menu-control:checked ~ .nav-menu .nav-item {
   opacity: 1;
   transform: translateX(0);
 }
 
-/* 設定每個選項的延遲，產生階梯式效果 */
 .nav-item:nth-child(1) {
   transition-delay: 0.1s;
 }
@@ -266,20 +208,63 @@ i {
   transition-delay: 0.3s;
 }
 
-/* Hero Section 容器 */
+/* --- 4. 按鈕組件 (Download & CTA) --- */
+.download-btn {
+  margin-top: 20px;
+  text-decoration: none;
+  background: var(--main-gradient);
+  color: #fff;
+  padding: 12px 60px;
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+.nav-card .download-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px auto 0;
+  width: 100%;
+}
+
+.navbar > .download-btn {
+  display: none;
+}
+
+.cta-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--main-gradient);
+  color: #fff;
+  text-decoration: none;
+  padding: 16px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(255, 126, 103, 0.3);
+}
+
+.cta-btn i {
+  margin-left: 8px;
+  font-size: 16px;
+}
+
+/* --- 5. Hero Section --- */
 .hero {
   background: linear-gradient(180deg, #ffead8 0%, #f7f6f1 100%);
   position: relative;
 }
 
 .hero-container {
-  padding-top: 100px; /* 預留給 fixed header 的空間 */
+  padding-top: 100px;
   padding-left: 25px;
   padding-right: 25px;
   text-align: left;
 }
 
-/* 標題與 Icon 的包裝層 */
 .hero-main {
   display: flex;
   justify-content: space-between;
@@ -295,10 +280,8 @@ i {
   font-weight: bold;
 }
 
-/* 針對標題內的強調文字 */
 .hero-title .highlight {
   color: var(--main-color);
-  /* 如果想讓顏色更顯眼，可以稍微加粗 */
   font-weight: bold;
 }
 
@@ -310,7 +293,6 @@ i {
   border: 2px solid var(--bg-color);
 }
 
-/* 描述文字 */
 .hero-desc {
   font-size: 16px;
   color: var(--secondary-text);
@@ -318,75 +300,45 @@ i {
   max-width: 90%;
 }
 
-/* 立即體驗按鈕 */
-.cta-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--main-gradient);
-  color: #fff;
-  text-decoration: none;
-  padding: 16px;
-  border-radius: 50px;
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 1;
-  width: 100%; /* 手機版按鈕撐滿 */
-  box-shadow: 0 8px 20px rgba(255, 126, 103, 0.3);
-}
-
-.fa-arrow-right {
-  font-size: 16px;
-}
-
-.cta-btn span {
-  margin-left: 8px;
-}
-
-/* 手機模擬圖 */
-/* Hero Mockup 容器設定 */
+/* Hero Mockup Device */
 .hero-mockup {
   position: relative;
   width: 100%;
-  height: 580px; /* 預留足夠高度給交疊的手機 */
+  height: 580px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  overflow: visible; /* 確保外框與陰影能顯示出來 */
+  overflow: visible;
 }
 
 .mockup-img {
   position: absolute;
   top: 0;
   left: 20%;
-  width: 200px; /* 依需求調整 */
+  width: 200px;
   aspect-ratio: 9 / 19.5;
   box-sizing: border-box;
-  overflow: hidden; /* 這一行很重要，讓圖片乖乖待在手機邊框內 */
-  /* --- 手機外框核心樣式 --- */
+  overflow: hidden;
   background-color: #000;
-  border: 6px solid #3d3d3d; /* 手機黑邊邊框 */
-  border-radius: 40px; /* 外框圓角 */
-  outline: 2px solid #333; /* 模擬金屬中框的細線 */
+  border: 6px solid #3d3d3d;
+  border-radius: 40px;
+  outline: 2px solid #333;
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.2),
-    inset 0 0 10px rgba(255, 255, 255, 0.1); /* 內陰影增加厚度感 */
-  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* 增加一點回彈感 */
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
 }
 
-/* --- 修正圖片內容的圓角 --- */
-/* 因為外框有厚度，我們需要確保圖片本身不會超出圓角 */
 .mockup-img img {
   width: 100%;
   height: 100%;
-  border-radius: 32px; /* 比外框稍微小一點的圓角 */
+  border-radius: 32px;
   display: block;
   object-fit: cover;
 }
 
-/* --- 製作手機劉海/動態島 --- */
 .mockup-img::before {
   content: "";
   position: absolute;
@@ -400,54 +352,49 @@ i {
   z-index: 10;
 }
 
-/* 後方圖片：往左上偏移，傾斜角度較大 */
 .mockup-img.back {
   z-index: 1;
   transform: translate(-30px, 40px) rotate(-5deg) scale(0.95);
-  filter: brightness(0.8); /* 稍微調暗增加深度感 */
+  filter: brightness(0.8);
 }
 
-/* 前方圖片：往右下偏移，傾斜角度較小（較正） */
 .mockup-img.front {
   z-index: 2;
   transform: translate(30px, 40px) rotate(5deg);
   filter: brightness(1);
 }
 
-/* 滑鼠滑入或頁面加載時的動態效果（選配） */
+/* Mockup Interaction */
 .hero-mockup:hover .mockup-img.back {
   transform: translate(-40px, 40px) rotate(-7deg) scale(0.95);
   filter: brightness(1);
 }
-
 .hero-mockup:hover .mockup-img.front {
   filter: brightness(0.7);
   transform: translate(40px, 40px) rotate(7deg);
 }
 
-/* --- 交換狀態 (.is-swapped) --- */
-/* 當點擊後，我們反轉所有的 transform 與 filter */
 .hero-mockup.is-swapped .mockup-img.back {
-  z-index: 2; /* 變到前方 */
+  z-index: 2;
   transform: translate(30px, 40px) rotate(5deg);
   filter: brightness(1);
 }
 .hero-mockup.is-swapped .mockup-img.front {
-  z-index: 1; /* 變到後方 */
+  z-index: 1;
   transform: translate(-30px, 40px) rotate(-5deg) scale(0.95);
   filter: brightness(0.8);
 }
 
-/* 交換狀態下的 Hover：也要反過來 */
-.hero-mockup.is-swapped:hover .mockup-img.back {
-  transform: translate(40px, 40px) rotate(7deg);
-  filter: brightness(0.7);
-}
 .hero-mockup.is-swapped:hover .mockup-img.front {
   transform: translate(-40px, 40px) rotate(-7deg) scale(0.95);
   filter: brightness(1);
 }
+.hero-mockup.is-swapped:hover .mockup-img.back {
+  filter: brightness(0.7);
+  transform: translate(40px, 40px) rotate(7deg);
+}
 
+/* --- 6. 波浪動畫 (Waves) --- */
 .waves-container {
   position: absolute;
   bottom: 0;
@@ -466,17 +413,12 @@ i {
 }
 
 .parallax > use {
-  /* 統一動畫效果 */
   animation: move-forever 20s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
 }
-
-/* 第一層（後方）：設定較短的延遲與較快的速度 */
 .parallax > use:nth-child(1) {
   animation-delay: -2s;
   animation-duration: 10s;
 }
-
-/* 第二層（前方）：設定較長的延遲與較慢的速度，產生交錯感 */
 .parallax > use:nth-child(2) {
   animation-delay: -5s;
   animation-duration: 15s;
@@ -491,44 +433,38 @@ i {
   }
 }
 
-/* 痛點區塊基礎設定 */
+/* --- 7. 痛點洞察 (Pain Points) --- */
 .pain-points {
   padding: 60px 25px;
 }
-
-/* 標題區樣式 */
 .section-header {
   margin-bottom: 20px;
 }
-
 .section-header h2 {
-  font-size: 28px;
+  font-size: 36px;
   color: var(--primary-text);
   margin-bottom: 12px;
   line-height: 1.4;
+  text-align: left;
 }
-
 .section-header p {
   font-size: 16px;
   color: var(--secondary-text);
+  text-align: left;
 }
 
-/* 卡片容器：手機版垂直排列 */
 .card-container {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* 卡片之間的間距 */
+  gap: 20px;
 }
-
-/* 單一卡片樣式 */
 .pain-card {
-  background-color: #ffffff; /* 純白卡片 */
+  background-color: #ffffff;
   padding: 30px;
-  border-radius: 24px; /* 圓角較大，顯得較溫潤 */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); /* 極輕微的陰影 */
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
 }
 
-/* 卡片內的圖示 */
 .card-icon {
   width: 60px;
   height: 60px;
@@ -538,84 +474,52 @@ i {
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
+}
+
+.card-container .card-icon {
   margin-bottom: 16px;
 }
 
 .card-icon i {
   font-size: 30px;
-  color: white; /* 如果圖示是黑色的，這行能把它變白色 */
+  color: white;
 }
-
-/* 卡片標題與內文 */
 .pain-card h3 {
   font-size: 22px;
   color: var(--primary-text);
   margin-bottom: 12px;
 }
-
 .pain-card p {
   font-size: 16px;
   color: var(--secondary-text);
   line-height: 1.6;
 }
 
-/* 核心功能總容器 */
+/* --- 8. 核心功能 (Features) --- */
 .features {
   padding: 60px 25px;
 }
-
 .features-container {
   display: flex;
   flex-direction: column;
 }
 
-/* 浮動卡片樣式 */
-.floating-card {
-  position: absolute;
-  width: 330px;
-  bottom: 0;
-  left: calc(50% - 165px);
-  background: rgba(255, 255, 255, 0.7); /* 半透明白 */
-  backdrop-filter: blur(20px); /* 毛玻璃效果 */
-  padding: 20px;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 3px solid rgba(255, 126, 103, 0.5);
-}
-
-.card-top {
-  display: flex;
-  gap: 16px;
-  flex-direction: row;
-}
-
-/* 卡片內的微型標籤 */
-.mini-tag {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--main-color);
-  letter-spacing: 1px;
-  display: block;
-  margin-bottom: 8px;
-}
-
-/* 增加區塊間的距離 */
 .mockup-container {
   position: relative;
   display: flex;
-  flex-direction: column; /* 垂直排列手機與卡片 */
-  align-items: center; /* 核心：確保所有元件水平居中對齊 */
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  margin: 0 auto;
-  margin-bottom: 32px;
-  max-width: 1200px; /* 容器本身置中 */
+  margin: 0 auto 32px;
+  max-width: 1200px;
 }
 
 .mockup-right {
   position: relative;
 }
+.mockup-bg {
+  border-radius: 40px;
+} /* 為確保桌面版同步設定 */
 
 .mockup-bg-blur {
   position: absolute;
@@ -629,43 +533,70 @@ i {
   z-index: -1;
 }
 
-/* 區塊基礎設定 */
+.floating-card {
+  position: absolute;
+  width: 330px;
+  bottom: 0;
+  left: calc(50% - 165px);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  padding: 20px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 3px solid rgba(255, 126, 103, 0.5);
+}
+
+.floating-card h2 {
+  display: none;
+}
+
+.card-top {
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.mini-tag {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--main-color);
+  letter-spacing: 1px;
+  display: block;
+}
+
+/* --- 9. 設計策略 (Strategy Tabs) --- */
 .strategy {
   position: relative;
-  padding: 60px 0; /* 左右不留 padding 以便按鈕滑動 */
+  padding: 60px 0;
   overflow: hidden;
   background-color: #ffffff;
 }
-
 .strategy .section-header {
   padding: 0 25px;
 }
 
-/* 隱藏原生 Radio */
 input[name="strategy-select"] {
   display: none;
 }
 
-/* 1. 橫向捲動容器 */
 .strategy-tabs {
   display: flex;
   gap: 15px;
-  padding: 20px; /* 回復正常的 padding */
+  padding: 20px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-
-  /* 核心邏輯：告訴容器，捕捉點要對齊容器的正中央 */
   scroll-padding: 0 50%;
 }
-
-/* 隱藏捲軸 */
 .strategy-tabs::-webkit-scrollbar {
   display: none;
 }
 
-/* 3. 單一卡片按鈕 */
 .tab-item {
   flex: 0 0 280px;
   background: #fff;
@@ -675,17 +606,17 @@ input[name="strategy-select"] {
   display: flex;
   gap: 12px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s all ease;
   box-shadow:
     0 10px 15px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  /* 核心邏輯：設定捕捉點在元素中心 */
   scroll-snap-align: center;
+  height: fit-content;
 }
 
 .tab-icon {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -701,15 +632,19 @@ input[name="strategy-select"] {
   color: var(--primary-text);
 }
 
+.tab-text h5 {
+  line-height: 2;
+  font-weight: 500;
+  color: var(--secondary-text);
+}
 .tab-text p {
   font-size: 13px;
   color: var(--secondary-text);
   margin-top: 4px;
+  display: none;
 }
 
-/* --- 核心互動邏輯 --- */
-
-/* 1. 選中時的紅框樣式 */
+/* Strategy Interaction */
 #strat1:checked ~ .strategy-tabs .item1,
 #strat2:checked ~ .strategy-tabs .item2,
 #strat3:checked ~ .strategy-tabs .item3,
@@ -718,67 +653,56 @@ input[name="strategy-select"] {
   background-color: #fff5f4;
 }
 
-/* 當對應的 input 被選中時 */
 #strat1:checked ~ .strategy-tabs .item1 .icon1,
 #strat2:checked ~ .strategy-tabs .item2 .icon2,
 #strat3:checked ~ .strategy-tabs .item3 .icon3,
 #strat4:checked ~ .strategy-tabs .item4 .icon4 {
-  /* 1. 改變背景為漸層 */
   background: var(--main-gradient) !important;
-  /* 這裡加入關鍵兩行 */
-  color: white !important; /* 供 currentColor 使用 */
+  color: white !important;
   stroke: white !important;
-  /* 3. 確保圖示是正圓形或圓角 */
   border-radius: 12px;
 }
 
-/* 進度條容器 */
+/* Dots Indicator */
 .dots-indicator {
   display: flex;
   justify-content: center;
   gap: 8px;
   margin: 20px 0;
 }
-
-/* 單個點的預設樣式（灰色、圓點） */
 .dot {
   width: 8px;
   height: 8px;
-  background-color: #e0e0e0; /* 預設淺灰色 */
+  background-color: #e0e0e0;
   border-radius: 50%;
   transition: all 0.3s ease;
 }
-
-/* 核心聯動邏輯：當對應的 input 被選中時，點要變色並稍微變寬（ Pills 效果） */
 #strat1:checked ~ .dots-indicator .dot1,
 #strat2:checked ~ .dots-indicator .dot2,
 #strat3:checked ~ .dots-indicator .dot3,
 #strat4:checked ~ .dots-indicator .dot4 {
-  background: var(--main-gradient); /* 變為主色漸層 */
-  width: 20px; /* 寬度增加，更有動感 */
-  border-radius: 10px; /* 維持圓角矩形感 */
+  background: var(--main-gradient);
+  width: 20px;
+  border-radius: 10px;
 }
 
-/* 2. 手機圖片切換邏輯 */
+/* Strategy Display Display */
 .strategy-display {
   position: relative;
   margin-top: 20px;
   display: flex;
   justify-content: center;
 }
-
 .phone-frame {
   width: 350px;
   position: relative;
   z-index: 2;
 }
-
 .phone-frame img {
   width: 100%;
   border-radius: 30px;
-  display: none; /* 預設全部隱藏 */
+  display: none;
 }
-
 .strategy-display-bg {
   width: 70%;
   height: 70%;
@@ -796,7 +720,6 @@ input[name="strategy-select"] {
   filter: blur(64px);
 }
 
-/* 當對應 radio 被選中時，顯示該圖片 */
 #strat1:checked ~ .strategy-display .img1,
 #strat2:checked ~ .strategy-display .img2,
 #strat3:checked ~ .strategy-display .img3,
@@ -804,25 +727,22 @@ input[name="strategy-select"] {
   display: block;
 }
 
-/* 願景區塊容器 */
+/* --- 10. 未來願景 (Vision) --- */
 .vision {
   padding: 60px 25px;
 }
-
-.tag-vision svg {
-  fill: var(--main-color);
-}
-
 .tag-vision {
   background-color: transparent;
   color: var(--main-color);
   border: var(--main-color) 1px solid;
   border-radius: 99px;
-  padding: 4px 16px;
   width: fit-content;
   line-height: 1;
   padding: 8px 16px;
   margin-bottom: 30px;
+}
+.tag-vision svg {
+  fill: var(--main-color);
 }
 
 .vision-title {
@@ -832,7 +752,6 @@ input[name="strategy-select"] {
   margin-bottom: 20px;
   line-height: 1.3;
 }
-
 .vision-desc {
   font-size: 16px;
   color: var(--secondary-text);
@@ -840,12 +759,10 @@ input[name="strategy-select"] {
   margin-bottom: 30px;
 }
 
-/* 條列式清單 */
 .vision-list {
   list-style: none;
   margin-bottom: 40px;
 }
-
 .vision-list li {
   font-size: 17px;
   color: var(--primary-text);
@@ -854,8 +771,6 @@ input[name="strategy-select"] {
   align-items: center;
   gap: 12px;
 }
-
-/* 製作彩色圓點 */
 .vision-list li::before {
   content: "";
   width: 8px;
@@ -863,8 +778,6 @@ input[name="strategy-select"] {
   border-radius: 50%;
   display: inline-block;
 }
-
-/* 根據圖片給予不同圓點顏色 */
 .vision-list li:nth-child(1)::before {
   background-color: var(--main-color);
 }
@@ -875,7 +788,6 @@ input[name="strategy-select"] {
   background-color: var(--main-color);
 }
 
-/* 願景大圖樣式（延續精緻圓角） */
 .vision-img img {
   max-height: 230px;
   object-fit: cover;
@@ -883,11 +795,10 @@ input[name="strategy-select"] {
   border-radius: 24px;
 }
 
-/* 最後導購區樣式 */
+/* --- 11. 最終導購 (Final CTA) --- */
 .final-cta {
   padding: 60px 25px;
 }
-
 .cta-card {
   background: var(--main-gradient);
   padding: 60px 20px;
@@ -895,13 +806,11 @@ input[name="strategy-select"] {
   text-align: center;
   color: #ffffff;
 }
-
 .cta-card h2 {
   font-size: 30px;
   margin-bottom: 15px;
   line-height: 1.4;
 }
-
 .cta-card p {
   font-size: 16px;
   opacity: 0.9;
@@ -909,14 +818,12 @@ input[name="strategy-select"] {
   line-height: 1.6;
 }
 
-/* 導購按鈕組 */
 .cta-btns {
   display: flex;
   flex-direction: column;
   gap: 15px;
   align-items: center;
 }
-
 .download-white {
   background-color: #ffffff;
   color: var(--main-color);
@@ -927,7 +834,6 @@ input[name="strategy-select"] {
   font-weight: bold;
   text-decoration: none;
 }
-
 .learn-more-outline {
   background-color: transparent;
   color: #ffffff;
@@ -940,14 +846,13 @@ input[name="strategy-select"] {
   text-decoration: none;
 }
 
-/* Footer 頁腳主體 */
+/* --- 12. 頁腳 (Footer) --- */
 .footer {
-  background-color: #2d2d2d; /* 深色背景 */
+  background-color: #2d2d2d;
   padding: 60px 25px 40px;
   text-align: center;
   color: #ffffff;
 }
-
 .footer-logo {
   display: flex;
   justify-content: center;
@@ -955,18 +860,14 @@ input[name="strategy-select"] {
   gap: 12px;
   margin-bottom: 25px;
 }
-
 .footer-logo img {
   height: 64px;
 }
-
 .footer-logo span {
   font-size: 28px;
   font-weight: bold;
   letter-spacing: 1px;
 }
-
-/* 標語樣式 */
 .footer-slogan {
   font-size: 15px;
   color: #b0b0b0;
@@ -974,18 +875,16 @@ input[name="strategy-select"] {
   margin-bottom: 35px;
 }
 
-/* 社群圖示按鈕 */
 .social-icons {
   display: flex;
   justify-content: center;
   gap: 15px;
   margin-bottom: 40px;
 }
-
 .social-btn {
   width: 45px;
   height: 45px;
-  background-color: #404040; /* 圓圈深灰色背景 */
+  background-color: #404040;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -995,37 +894,32 @@ input[name="strategy-select"] {
   transition: 0.3s;
   font-size: 18px;
 }
-
 .social-btn:hover {
-  background-color: var(--main-color); /* 懸停時變主色 */
+  background-color: var(--main-color);
 }
 
-/* 分隔線 */
 .footer-divider {
   border: 0;
   border-top: 1px solid #404040;
   margin-bottom: 30px;
 }
-
-/* 底部文字區 */
 .footer-legal {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-bottom: 20px;
 }
-
 .footer-legal a {
   color: #b0b0b0;
   font-size: 14px;
   text-decoration: none;
 }
-
 .copyright {
   font-size: 13px;
   color: #808080;
 }
 
+/* --- 13. Back to Top Button --- */
 .go-top-btn {
   position: fixed;
   bottom: 30px;
@@ -1047,791 +941,600 @@ input[name="strategy-select"] {
   transition: all 0.4s ease;
   box-shadow: 0 4px 15px rgba(251, 138, 120, 0.3);
 }
-
-/* 顯示狀態 */
 .go-top-btn.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
-
-/* 懸停效果 */
 .go-top-btn:hover {
   background: rgba(251, 138, 120, 1);
-  transform: translateY(-5px); /* 輕微往上跳動感 */
+  transform: translateY(-5px);
   box-shadow: 0 6px 20px rgba(251, 138, 120, 0.5);
 }
 
-/*============ 平板 =============*/
+/* --- 14. Responsive Media Queries --- */
+
+/* 平板尺寸 (768px - 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
-  /* --- Hero 區塊桌面化 --- */
   .navbar,
   .strategy .section-header {
     padding: 0 40px;
   }
-
   .pain-points,
   .features,
   .vision,
   .final-cta {
     padding: 60px 40px;
   }
-
   .hero-container {
     display: flex;
-    align-items: center; /* 垂直置中 */
+    align-items: center;
     justify-content: space-between;
-    padding: 100px 40px 80px; /* 增加上下間距 */
+    padding: 100px 40px 80px;
     max-width: 1200px;
     margin: 0 auto;
-    text-align: left; /* 確保文字靠左 */
+    text-align: left;
   }
-
   .hero-content {
-    flex: 1; /* 佔據左側空間 */
+    flex: 1;
   }
-
   .hero-main {
-    flex-direction: column; /* 在桌面版讓標題與 App Icon 回到上下排列 */
+    flex-direction: column;
     align-items: flex-start;
     margin-bottom: 30px;
   }
-
   .hero-title {
-    font-size: 56px; /* 標題放大，更有張力 */
+    font-size: 56px;
     line-height: 1.2;
   }
-
   .app-icon {
     margin-top: 20px;
   }
-
   .app-icon img {
-    width: 100px; /* 縮小 Icon，不要搶了標題風頭 */
+    width: 100px;
     height: 100px;
   }
-
   .hero-desc {
     font-size: 18px;
-    max-width: 500px; /* 限制文字寬度，方便閱讀 */
+    max-width: 500px;
   }
-
   .cta-btn {
-    width: fit-content; /* 按鈕不再撐滿，依文字寬度 */
+    width: fit-content;
     padding: 16px 40px;
   }
-
-  /* 右側手機模擬圖 */
   .hero-mockup {
-    flex: 1; /* 佔據右側空間 */
-    margin: 0; /* 移除手機版的負邊距 */
+    flex: 1;
+    margin: 0;
     justify-content: flex-end;
-    height: 600px; /* 增加高度，給予更多空間 */
+    height: 600px;
   }
-
   .mockup-img {
     top: 5%;
     left: 20%;
-    width: 230px; /* 依需求調整 */
+    width: 230px;
   }
-
   .mockup-img.back {
     transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
   }
-
   .mockup-img.front {
     transform: translate(40px, 40px) rotate(8deg);
   }
-
-  .hero-mockup:hover .mockup-img.back {
-    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
-  }
-
-  .hero-mockup:hover .mockup-img.front {
-    transform: translate(50px, 40px) rotate(10deg);
-  }
-
-  .hero-mockup.is-swapped .mockup-img.back {
-    transform: translate(40px, 40px) rotate(8deg);
-  }
-  .hero-mockup.is-swapped .mockup-img.front {
-    transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
-  }
-
-  .hero-mockup.is-swapped:hover .mockup-img.back {
-    transform: translate(50px, 40px) rotate(10deg);
-  }
-  .hero-mockup.is-swapped:hover .mockup-img.front {
-    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
-  }
-
   .floating-card {
     width: 500px;
     left: calc(50% - 250px);
   }
 
-  /* --- 2. 最終導購區 --- */
+  .floating-card h2 {
+    display: block;
+    line-height: 3;
+  }
+
+  .card-top {
+    margin-bottom: 0;
+  }
+
   .final-cta {
     padding: 100px 40px;
   }
-
   .cta-card {
-    max-width: 1200px; /* 限制卡片寬度 */
+    max-width: 1200px;
     margin: 0 auto;
     padding: 80px 40px;
-    border-radius: 24px; /* 更圓潤的角 */
+    border-radius: 24px;
   }
-
   .cta-card h2 {
-    font-size: 48px; /* 標題加強 */
+    font-size: 48px;
     line-height: 1.2;
     margin-bottom: 24px;
   }
-
   .cta-card p {
     font-size: 20px;
     margin-bottom: 48px;
   }
-
-  /* 按鈕改為橫向排列 */
   .cta-btns {
-    flex-direction: row; /* 關鍵：轉為橫向 */
+    flex-direction: row;
     justify-content: center;
     gap: 24px;
   }
-
   .download-white,
   .learn-more-outline {
-    width: 220px; /* 固定按鈕寬度 */
+    width: 220px;
     margin: 0;
     padding: 18px;
     font-size: 16px;
   }
-
-  /* --- Footer 容器優化 --- */
   .footer {
-    padding: 80px 40px 40px; /* 增加頂部間距 */
-    text-align: left; /* 預設靠左對齊 */
+    padding: 80px 40px 40px;
+    text-align: left;
   }
-
   .footer-container {
     max-width: 1200px;
     margin: 0 auto;
   }
-
-  /* 上半部：Logo、Slogan、Social Icons */
-  /* 我們可以維持原 HTML，透過控制子元素達成佈局 */
-
   .footer-logo {
-    justify-content: flex-start; /* Logo 靠左 */
+    justify-content: flex-start;
     margin-bottom: 20px;
   }
-
   .footer-slogan {
     text-align: left;
     margin-left: 0;
-    max-width: 400px; /* 限制寬度，避免文字拉太長 */
+    max-width: 400px;
     margin-bottom: 30px;
   }
-
   .social-icons {
-    justify-content: flex-start; /* 按鈕靠左 */
+    justify-content: flex-start;
     gap: 20px;
   }
-
-  /* 分隔線 */
   .footer-divider {
     max-width: 1200px;
     margin: 40px auto 30px;
-    opacity: 0.1; /* 讓線條淡一點，更高級 */
+    opacity: 0.1;
   }
-
-  /* 下半部：法律條款與版權 (左右分立) */
   .footer-bottom {
     display: flex;
-    justify-content: space-between; /* 關鍵：一左一右 */
+    justify-content: space-between;
     align-items: center;
-    flex-direction: row; /* 確保是橫向 */
+    flex-direction: row;
     max-width: 1200px;
     margin: 0 auto;
   }
-
   .footer-legal {
-    margin-bottom: 0; /* 移除手機版的底距 */
-    order: 2; /* 讓條款在右邊 */
+    margin-bottom: 0;
+    order: 2;
   }
-
   .copyright {
-    order: 1; /* 讓版權在左邊 */
+    order: 1;
   }
 }
 
-/*============ 平板橫屏 =============*/
+/* 平板橫屏 (1024px - 1199px) */
 @media (min-width: 1024px) and (max-width: 1199px) {
   .navbar,
   .strategy .section-header {
     padding: 0 60px;
   }
-
   .pain-points,
   .features,
   .vision,
   .final-cta {
     padding: 60px 60px;
   }
-
-  /* 1. Navbar 配置調整 */
   .navbar {
-    max-width: 1200px; /* 限制導覽列最大寬度 */
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 60px;
     position: relative;
   }
-
-  /* 2. 隱藏手機版漢堡按鈕與 checkbox */
   .menu-toggle,
   .menu-control {
     display: none;
   }
-
-  /* 3. 恢復選單顯示並轉為橫向 */
   .nav-menu {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: auto; /* 覆蓋手機版的 top: 70px */
+    top: auto;
     width: auto;
     height: auto;
     background-color: transparent;
     visibility: visible;
     pointer-events: auto;
-    display: block; /* 確保顯示 */
+    display: block;
   }
-
   .nav-card {
     background-color: transparent;
     box-shadow: none;
     padding: 0;
-    transform: none; /* 移除位移動畫 */
+    transform: none;
     transition: none;
     display: flex;
     align-items: center;
   }
-
   .nav-card .download-btn {
-    display: none; /* 桌面版我們通常讓下載按鈕獨立在 Navbar 右側 */
+    display: none;
   }
-
-  .download-btn span {
-    line-height: 1;
-  }
-
-  /* 確保原本在 Navbar 裡的下載按鈕是顯示的 */
   .navbar > .download-btn {
     display: flex;
+    margin: 0;
+    width: auto;
+    padding: 10px 25px;
+    font-size: 15px;
   }
-
   .nav-list {
-    display: flex; /* 核心：列表橫排 */
+    display: flex;
     gap: 10px;
   }
-
   .nav-item {
-    opacity: 1; /* 取消透明度動畫 */
+    opacity: 1;
     transform: none;
   }
-
   .nav-item a {
     padding: 10px 15px;
     font-size: 16px;
     border-radius: 12px;
   }
-
-  /* 4. 下載按鈕改為小尺寸 */
-  .navbar .download-btn {
-    margin: 0; /* 移除手機版的上下 margin */
-    width: auto;
-    padding: 10px 25px;
-    font-size: 15px;
-  }
-
-  /* --- Hero 區塊桌面化 --- */
   .hero-container {
     display: flex;
-    align-items: center; /* 垂直置中 */
+    align-items: center;
     justify-content: space-between;
-    padding: 100px 60px 80px; /* 增加上下間距 */
+    padding: 100px 60px 80px;
     max-width: 1200px;
     margin: 0 auto;
-    text-align: left; /* 確保文字靠左 */
+    text-align: left;
   }
-
   .hero-content {
-    flex: 1; /* 佔據左側空間 */
+    flex: 1;
   }
-
   .hero-main {
-    flex-direction: column; /* 在桌面版讓標題與 App Icon 回到上下排列 */
+    flex-direction: column;
     align-items: flex-start;
     margin-bottom: 30px;
   }
-
   .hero-title {
-    font-size: 56px; /* 標題放大，更有張力 */
+    font-size: 56px;
     line-height: 1.2;
   }
-
   .app-icon {
     margin-top: 20px;
   }
-
   .app-icon img {
-    width: 100px; /* 縮小 Icon，不要搶了標題風頭 */
+    width: 100px;
     height: 100px;
   }
-
   .hero-desc {
     font-size: 18px;
-    max-width: 500px; /* 限制文字寬度，方便閱讀 */
+    max-width: 500px;
   }
-
   .cta-btn {
-    width: fit-content; /* 按鈕不再撐滿，依文字寬度 */
+    width: fit-content;
     padding: 16px 40px;
   }
-
-  /* 右側手機模擬圖 */
   .hero-mockup {
-    flex: 1; /* 佔據右側空間 */
-    margin: 0; /* 移除手機版的負邊距 */
+    flex: 1;
+    margin: 0;
     justify-content: flex-end;
-    height: 600px; /* 增加高度，給予更多空間 */
+    height: 600px;
   }
-
   .mockup-img {
     top: 5%;
     left: 25%;
-    width: 230px; /* 依需求調整 */
+    width: 230px;
   }
-
   .mockup-img.back {
     transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
   }
-
   .mockup-img.front {
     transform: translate(40px, 40px) rotate(8deg);
   }
-
-  .hero-mockup:hover .mockup-img.back {
-    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
-  }
-
-  .hero-mockup:hover .mockup-img.front {
-    transform: translate(50px, 40px) rotate(10deg);
-  }
-
-  .hero-mockup.is-swapped .mockup-img.back {
-    transform: translate(40px, 40px) rotate(8deg);
-  }
-  .hero-mockup.is-swapped .mockup-img.front {
-    transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
-  }
-
-  .hero-mockup.is-swapped:hover .mockup-img.back {
-    transform: translate(50px, 40px) rotate(10deg);
-  }
-  .hero-mockup.is-swapped:hover .mockup-img.front {
-    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
-  }
-
   .floating-card {
     width: 550px;
     left: calc(50% - 275px);
   }
 
-  /* --- 2. 最終導購區 --- */
+  .floating-card h2 {
+    display: block;
+    line-height: 3;
+  }
+
+  .card-top {
+    margin-bottom: 0;
+  }
+
   .final-cta {
     padding: 100px 60px;
   }
-
   .cta-card {
-    max-width: 1200px; /* 限制卡片寬度 */
+    max-width: 1200px;
     margin: 0 auto;
     padding: 80px 40px;
-    border-radius: 24px; /* 更圓潤的角 */
+    border-radius: 24px;
   }
-
   .cta-card h2 {
-    font-size: 48px; /* 標題加強 */
+    font-size: 48px;
     line-height: 1.2;
     margin-bottom: 24px;
   }
-
   .cta-card p {
     font-size: 20px;
     margin-bottom: 48px;
   }
-
-  /* 按鈕改為橫向排列 */
   .cta-btns {
-    flex-direction: row; /* 關鍵：轉為橫向 */
+    flex-direction: row;
     justify-content: center;
     gap: 24px;
   }
-
   .download-white,
   .learn-more-outline {
-    width: 220px; /* 固定按鈕寬度 */
+    width: 220px;
     margin: 0;
     padding: 18px;
     font-size: 16px;
   }
-
-  /* --- Footer 容器優化 --- */
   .footer {
-    padding: 80px 60px 40px; /* 增加頂部間距 */
-    text-align: left; /* 預設靠左對齊 */
+    padding: 80px 60px 40px;
+    text-align: left;
   }
-
   .footer-container {
     max-width: 1200px;
     margin: 0 auto;
   }
-
-  /* 上半部：Logo、Slogan、Social Icons */
-  /* 我們可以維持原 HTML，透過控制子元素達成佈局 */
-
   .footer-logo {
-    justify-content: flex-start; /* Logo 靠左 */
+    justify-content: flex-start;
     margin-bottom: 20px;
   }
-
   .footer-slogan {
     text-align: left;
     margin-left: 0;
-    max-width: 400px; /* 限制寬度，避免文字拉太長 */
+    max-width: 400px;
     margin-bottom: 30px;
   }
-
   .social-icons {
-    justify-content: flex-start; /* 按鈕靠左 */
+    justify-content: flex-start;
     gap: 20px;
   }
-
-  /* 分隔線 */
   .footer-divider {
     max-width: 1200px;
     margin: 40px auto 30px;
-    opacity: 0.1; /* 讓線條淡一點，更高級 */
+    opacity: 0.1;
   }
-
-  /* 下半部：法律條款與版權 (左右分立) */
   .footer-bottom {
     display: flex;
-    justify-content: space-between; /* 關鍵：一左一右 */
+    justify-content: space-between;
     align-items: center;
-    flex-direction: row; /* 確保是橫向 */
+    flex-direction: row;
     max-width: 1200px;
     margin: 0 auto;
   }
-
   .footer-legal {
-    margin-bottom: 0; /* 移除手機版的底距 */
-    order: 2; /* 讓條款在右邊 */
+    margin-bottom: 0;
+    order: 2;
   }
-
   .copyright {
-    order: 1; /* 讓版權在左邊 */
+    order: 1;
   }
 }
 
-/*============ 桌機 =============*/
+/* 桌面尺寸 (1200px+) */
 @media (min-width: 1200px) {
-  /* 1. Navbar 配置調整 */
   .navbar {
-    max-width: 1200px; /* 限制導覽列最大寬度 */
+    max-width: 1200px;
     margin: 0 auto;
     position: relative;
   }
-
-  /* 2. 隱藏手機版漢堡按鈕與 checkbox */
   .menu-toggle,
   .menu-control {
     display: none;
   }
-
-  /* 3. 恢復選單顯示並轉為橫向 */
   .nav-menu {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: auto; /* 覆蓋手機版的 top: 70px */
+    top: auto;
     width: auto;
     height: auto;
     background-color: transparent;
     visibility: visible;
     pointer-events: auto;
-    display: block; /* 確保顯示 */
+    display: block;
   }
-
   .nav-card {
     background-color: transparent;
     box-shadow: none;
     padding: 0;
-    transform: none; /* 移除位移動畫 */
+    transform: none;
     transition: none;
     display: flex;
     align-items: center;
   }
-
   .nav-card .download-btn {
-    display: none; /* 桌面版我們通常讓下載按鈕獨立在 Navbar 右側 */
+    display: none;
   }
-
-  .download-btn span {
-    line-height: 1;
-  }
-
-  /* 確保原本在 Navbar 裡的下載按鈕是顯示的 */
   .navbar > .download-btn {
     display: flex;
+    margin: 0;
+    width: auto;
+    padding: 10px 25px;
+    font-size: 15px;
   }
-
   .nav-list {
-    display: flex; /* 核心：列表橫排 */
+    display: flex;
     gap: 10px;
   }
-
   .nav-item {
-    opacity: 1; /* 取消透明度動畫 */
+    opacity: 1;
     transform: none;
   }
-
   .nav-item a {
     padding: 10px 15px;
     font-size: 16px;
     border-radius: 12px;
   }
-
-  /* 4. 下載按鈕改為小尺寸 */
-  .navbar .download-btn {
-    margin: 0; /* 移除手機版的上下 margin */
-    width: auto;
-    padding: 10px 25px;
-    font-size: 15px;
-  }
-
-  /* --- Hero 區塊桌面化 --- */
   .hero-container {
     display: flex;
-    align-items: center; /* 垂直置中 */
+    align-items: center;
     justify-content: space-between;
-    padding: 100px 40px 80px; /* 增加上下間距 */
+    padding: 100px 40px 80px;
     max-width: 1200px;
     margin: 0 auto;
-    text-align: left; /* 確保文字靠左 */
+    text-align: left;
   }
-
   .hero-content {
-    flex: 1; /* 佔據左側空間 */
+    flex: 1;
   }
-
   .hero-main {
-    flex-direction: column; /* 在桌面版讓標題與 App Icon 回到上下排列 */
+    flex-direction: column;
     align-items: flex-start;
     margin-bottom: 30px;
   }
-
   .hero-title {
-    font-size: 56px; /* 標題放大，更有張力 */
+    font-size: 56px;
     line-height: 1.2;
   }
-
   .app-icon {
     margin-top: 20px;
   }
-
   .app-icon img {
-    width: 100px; /* 縮小 Icon，不要搶了標題風頭 */
+    width: 100px;
     height: 100px;
   }
-
   .hero-desc {
     font-size: 18px;
-    max-width: 500px; /* 限制文字寬度，方便閱讀 */
+    max-width: 500px;
   }
-
   .cta-btn {
-    width: fit-content; /* 按鈕不再撐滿，依文字寬度 */
+    width: fit-content;
     padding: 16px 40px;
   }
-
-  /* 右側手機模擬圖 */
   .hero-mockup {
-    flex: 1; /* 佔據右側空間 */
-    margin: 0; /* 移除手機版的負邊距 */
+    flex: 1;
+    margin: 0;
     justify-content: flex-end;
-    height: 680px; /* 增加高度，給予更多空間 */
+    height: 680px;
   }
-
   .mockup-img {
     left: 25%;
-    width: 280px; /* 依需求調整 */
+    width: 280px;
   }
-
   .mockup-img.back {
     transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
   }
-
   .mockup-img.front {
     transform: translate(40px, 40px) rotate(8deg);
   }
-
-  .hero-mockup:hover .mockup-img.back {
-    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
-  }
-
-  .hero-mockup:hover .mockup-img.front {
-    transform: translate(50px, 40px) rotate(10deg);
-  }
-
-  .hero-mockup.is-swapped .mockup-img.back {
-    transform: translate(40px, 40px) rotate(8deg);
-  }
-  .hero-mockup.is-swapped .mockup-img.front {
-    transform: translate(-40px, 40px) rotate(-8deg) scale(0.95);
-  }
-
-  .hero-mockup.is-swapped:hover .mockup-img.back {
-    transform: translate(50px, 40px) rotate(10deg);
-  }
-  .hero-mockup.is-swapped:hover .mockup-img.front {
-    transform: translate(-50px, 40px) rotate(-10deg) scale(0.95);
-  }
-
-  /* --- 痛點區塊桌面化 --- */
   .pain-points {
     padding: 100px 60px;
     margin: 0 auto;
   }
-
   .pain-points-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 40px;
   }
-
   .pain-points .section-header {
-    text-align: center; /* 標題置中 */
+    text-align: center;
     margin-bottom: 60px;
   }
 
-  .pain-points .section-header h2 {
-    font-size: 42px; /* 標題放大 */
+  .section-header h2 {
+    font-size: 42px;
+    text-align: center;
+  }
+  .section-header p {
+    text-align: center;
   }
 
-  /* 核心：將容器轉為橫向排列 */
+  .strategy-container .section-header h2,
+  .strategy-container .section-header p {
+    text-align: left;
+  }
+
   .card-container {
-    flex-direction: row; /* 轉為橫向 */
+    flex-direction: row;
     justify-content: center;
-    gap: 30px; /* 增加卡片間距 */
+    gap: 30px;
   }
-
   .pain-card {
-    flex: 1; /* 讓三張卡片等寬 */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center; /* 卡片內容置中 */
+    align-items: center;
     text-align: center;
     padding: 40px 30px;
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease;
   }
-
-  /* 增加 Hover 互動感 */
   .pain-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   }
-
-  .card-icon {
+  .card-container .card-icon {
     margin-bottom: 25px;
   }
-
-  /* --- 核心功能區塊桌面化 --- */
   .features {
     padding: 100px 60px;
   }
-
   .features-container {
     max-width: 1200px;
     padding: 0 40px;
     margin: auto;
   }
-
-  /* 調整容器為雙欄排列 */
   .mockup-container {
-    flex-direction: row; /* 左右並排 */
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 150px; /* 增加功能間的垂直間距 */
+    margin-bottom: 150px;
     gap: 80px;
     position: relative;
-    overflow: visible; /* 讓卡片可以部分疊加在圖片上 */
+    overflow: visible;
   }
-
-  /* 關鍵邏輯：讓第 2、4、6 個區塊的反過來排 (右圖左文) */
   .mockup-container:nth-of-type(even) {
     flex-direction: row-reverse;
   }
-
   .mockup-bg {
     flex: 1;
-    max-width: 450px; /* 桌面版圖片不用太大，維持精緻感 */
+    max-width: 450px;
     border-radius: 40px;
   }
-
-  /* 調整浮動卡片，在桌面版不再「浮動」在圖片內，而是獨立在旁邊 */
   .floating-card {
     flex: 1;
-    position: static; /* 移除手機版的絕對定位 */
-    background: transparent; /* 移除背景，改用大標題風格 */
+    position: static;
+    background: transparent;
     backdrop-filter: none;
     box-shadow: none;
     border: none;
     padding: 0;
     text-align: left;
-    display: block; /* 回復塊狀佈局 */
+    display: block;
   }
 
-  .card-icon {
+  .floating-card h2 {
+    display: block;
+    line-height: 3;
+  }
+
+  .card-top {
+    margin-bottom: 0;
+  }
+
+  .card-container .card-icon {
     width: 60px;
     height: 60px;
     margin-bottom: 25px;
   }
-
   .card-text h4 {
-    font-size: 32px; /* 功能標題放大 */
+    font-size: 32px;
     margin-bottom: 20px;
     color: var(--primary-text);
   }
-
   .card-text p {
     font-size: 18px;
     line-height: 1.8;
     color: var(--secondary-text);
   }
-
-  .mini-tag {
-    font-size: 16px;
-  }
-
-  /* --- 設計策略區塊桌面化 --- */
   .strategy {
-    padding: 100px 60px 100px; /* 增加下方間距 */
+    padding: 100px 60px 100px;
   }
-
   .strategy-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -1840,35 +1543,28 @@ input[name="strategy-select"] {
     flex-direction: column;
     justify-content: space-between;
   }
-
   .strategy-select-container {
     display: flex;
     align-items: center;
     gap: 60px;
   }
-
   .strategy .section-header {
     padding: 0;
   }
-
-  /* 左側按鈕區域 */
   .strategy-tabs {
     flex: 1;
     display: flex;
-    flex-direction: column; /* 轉為垂直排列 */
+    flex-direction: column;
     gap: 20px;
-    overflow: visible; /* 移除手機版的捲動 */
+    overflow: visible;
     padding: 0;
   }
-
   .tab-item {
-    flex: none; /* 移除手機版固定寬度 */
+    flex: none;
     width: 100%;
     transform-origin: left center;
     transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-
-  /* 選中時的特殊動態：向右微調並放大 */
   #strat1:checked ~ .strategy-container .item1,
   #strat2:checked ~ .strategy-container .item2,
   #strat3:checked ~ .strategy-container .item3,
@@ -1877,160 +1573,132 @@ input[name="strategy-select"] {
     box-shadow: 0 15px 30px rgba(255, 126, 103, 0.15);
   }
 
-  /* 右側手機顯示區域 */
+  #strat1:checked ~ .strategy-tabs .item1 .tab-text p,
+  #strat2:checked ~ .strategy-tabs .item2 .tab-text p,
+  #strat3:checked ~ .strategy-tabs .item3 .tab-text p,
+  #strat4:checked ~ .strategy-tabs .item4 .tab-text p {
+    display: block;
+    line-height: 1.5;
+  }
+
   .strategy-display {
     flex: 1;
-    margin-top: 0; /* 移除手機版間距 */
+    margin-top: 0;
   }
-
   .phone-frame {
     width: 100%;
-    max-width: 320px; /* 桌面版維持精緻大小 */
+    max-width: 320px;
   }
-
   .dots-indicator {
     display: none;
   }
-
-  /* --- 1. 未來願景區塊 --- */
   .vision {
     padding: 120px 60px;
   }
-
   .vision-container {
     display: flex;
-    flex-wrap: wrap; /* 允許折行，增加佈局彈性 */
-    align-items: center; /* 垂直居中 */
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
-    gap: 60px; /* 左右間距 */
+    gap: 60px;
     padding: 0 40px;
     max-width: 1200px;
     margin: 0 auto;
-    text-align: left; /* 恢復靠左對齊 */
+    text-align: left;
   }
-
   .text-content {
-    max-width: 500px; /* 限制文字區寬度，增加閱讀舒適度 */
+    max-width: 500px;
   }
-
-  /* 圖片區塊 */
   .vision-img {
     flex: 1;
     display: flex;
     justify-content: flex-end;
   }
-
   .vision-img img {
     max-width: 600px;
     max-height: 500px;
     width: 100%;
     object-fit: cover;
   }
-
-  /* 調整清單在桌面版的間距 */
   .vision-list {
     margin-top: 20px;
     margin-bottom: 0;
   }
-
-  /* --- 2. 最終導購區 --- */
   .final-cta {
     padding: 100px 60px;
   }
-
   .cta-card {
-    max-width: 1200px; /* 限制卡片寬度 */
+    max-width: 1200px;
     margin: 0 auto;
     padding: 80px 40px;
-    border-radius: 24px; /* 更圓潤的角 */
+    border-radius: 24px;
   }
-
   .cta-card h2 {
-    font-size: 48px; /* 標題加強 */
+    font-size: 48px;
     line-height: 1.2;
     margin-bottom: 24px;
   }
-
   .cta-card p {
     font-size: 20px;
     margin-bottom: 48px;
   }
-
-  /* 按鈕改為橫向排列 */
   .cta-btns {
-    flex-direction: row; /* 關鍵：轉為橫向 */
+    flex-direction: row;
     justify-content: center;
     gap: 24px;
   }
-
   .download-white,
   .learn-more-outline {
-    width: 220px; /* 固定按鈕寬度 */
+    width: 220px;
     margin: 0;
     padding: 18px;
     font-size: 16px;
   }
-
-  /* --- Footer 容器優化 --- */
   .footer {
-    padding: 80px 60px 40px; /* 增加頂部間距 */
-    text-align: left; /* 預設靠左對齊 */
+    padding: 80px 60px 40px;
+    text-align: left;
   }
-
   .footer-container {
     max-width: 1200px;
     margin: 0 auto;
   }
-
-  /* 上半部：Logo、Slogan、Social Icons */
-  /* 我們可以維持原 HTML，透過控制子元素達成佈局 */
-
   .footer-logo {
-    justify-content: flex-start; /* Logo 靠左 */
+    justify-content: flex-start;
     margin-bottom: 20px;
   }
-
   .footer-slogan {
     text-align: left;
     margin-left: 0;
-    max-width: 400px; /* 限制寬度，避免文字拉太長 */
+    max-width: 400px;
     margin-bottom: 30px;
   }
-
   .social-icons {
-    justify-content: flex-start; /* 按鈕靠左 */
+    justify-content: flex-start;
     gap: 20px;
   }
-
-  /* 分隔線 */
   .footer-divider {
     max-width: 1200px;
     margin: 40px auto 30px;
-    opacity: 0.1; /* 讓線條淡一點，更高級 */
+    opacity: 0.1;
   }
-
-  /* 下半部：法律條款與版權 (左右分立) */
   .footer-bottom {
     display: flex;
-    justify-content: space-between; /* 關鍵：一左一右 */
+    justify-content: space-between;
     align-items: center;
-    flex-direction: row; /* 確保是橫向 */
+    flex-direction: row;
     max-width: 1200px;
     margin: 0 auto;
   }
-
   .footer-legal {
-    margin-bottom: 0; /* 移除手機版的底距 */
-    order: 2; /* 讓條款在右邊 */
+    margin-bottom: 0;
+    order: 2;
   }
-
   .copyright {
-    order: 1; /* 讓版權在左邊 */
+    order: 1;
   }
 }
 
 @media (hover: none) {
-  /* 這裡強制讓「手機觸控」時不要有任何變暗濾鏡 */
   .mockup-img,
   .hero-mockup:hover .mockup-img.front,
   .hero-mockup:hover .mockup-img.back {
