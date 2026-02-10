@@ -1378,8 +1378,7 @@ input[name="strategy-select"] {
     margin-top: 0;
   }
   .phone-frame {
-    width: 100%;
-    max-width: 320px;
+    max-width: 300px;
   }
   .dots-indicator {
     display: none;
@@ -1732,8 +1731,7 @@ input[name="strategy-select"] {
     margin-top: 0;
   }
   .phone-frame {
-    width: 100%;
-    max-width: 320px;
+    max-width: 300px;
   }
   .dots-indicator {
     display: none;
