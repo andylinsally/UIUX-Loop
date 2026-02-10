@@ -729,12 +729,12 @@ input[name="strategy-select"] {
 /* Strategy Display Display */
 .strategy-display {
   position: relative;
-  margin-top: 20px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
 }
 .phone-frame {
-  width: 350px;
+  width: 80%;
   position: relative;
   z-index: 2;
   overflow: hidden;
@@ -761,7 +761,7 @@ input[name="strategy-select"] {
 }
 
 .phone-frame video {
-  width: 100%;
+  width:100%;
   object-fit: cover;
   display: none;
 }
