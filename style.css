@@ -735,6 +735,7 @@ input[name="strategy-select"] {
 }
 .phone-frame {
   width: 80%;
+  max-width: 250px;
   position: relative;
   z-index: 2;
   overflow: hidden;
@@ -792,7 +793,7 @@ input[name="strategy-select"] {
 
 /* --- 10. 未來願景 (Vision) --- */
 .vision {
-  padding: 60px 25px;
+  padding: 120px 25px 60px;
 }
 .tag-vision {
   background-color: transparent;
@@ -1027,7 +1028,7 @@ input[name="strategy-select"] {
   .features,
   .vision,
   .final-cta {
-    padding: 60px 40px;
+    padding: 120px 40px 60px;
   }
   .hero-container {
     display: flex;
@@ -1082,6 +1083,11 @@ input[name="strategy-select"] {
   .mockup-img.front {
     transform: translate(40px, 40px) rotate(8deg);
   }
+
+  .phone-frame {
+    max-width: 300px;
+  }
+
   .floating-card {
     width: 500px;
     left: calc(50% - 250px);
@@ -1382,6 +1388,10 @@ input[name="strategy-select"] {
   }
   .dots-indicator {
     display: none;
+  }
+
+.vision {
+    padding: 100px 60px;
   }
 
   .final-cta {
@@ -1737,7 +1747,7 @@ input[name="strategy-select"] {
     display: none;
   }
   .vision {
-    padding: 120px 60px;
+    padding: 100px 60px;
   }
   .vision-container {
     display: flex;
