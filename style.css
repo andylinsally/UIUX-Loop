@@ -502,6 +502,7 @@ section {
 .features-container {
   display: flex;
   flex-direction: column;
+  gap: 48px;
 }
 
 .mockup-container {
@@ -517,9 +518,23 @@ section {
 .mockup-right {
   position: relative;
 }
+
+.mockup-right video {
+  object-fit: cover;
+}
+
 .mockup-bg {
+  aspect-ratio: 9 / 19.5;
+  height: 650px;
+  overflow: hidden;
+  background-color: #000;
+  border: 6px solid #3d3d3d;
   border-radius: 40px;
-} /* 為確保桌面版同步設定 */
+  outline: 2px solid #333;
+  box-shadow:
+    0 5px 25px rgba(0, 0, 0, 0.2),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
+}
 
 .mockup-bg-blur {
   position: absolute;
@@ -527,7 +542,7 @@ section {
   height: 80%;
   top: 10%;
   left: 25%;
-  opacity: 0.3;
+  opacity: 1;
   background: linear-gradient(135deg, #ff7e67 0%, #f5a695 100%);
   filter: blur(64px);
   z-index: -1;
@@ -722,12 +737,35 @@ input[name="strategy-select"] {
   width: 350px;
   position: relative;
   z-index: 2;
+  overflow: hidden;
+  background-color: #000;
+  border: 6px solid #3d3d3d;
+  border-radius: 40px;
+  outline: 2px solid #333;
+  box-shadow:
+    0 5px 25px rgba(0, 0, 0, 0.2),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
 }
-.phone-frame img {
+
+.phone-frame::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 18px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  z-index: 10;
+}
+
+.phone-frame video {
   width: 100%;
-  border-radius: 30px;
+  object-fit: cover;
   display: none;
 }
+
 .strategy-display-bg {
   width: 70%;
   height: 70%;
