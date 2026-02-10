@@ -633,14 +633,39 @@ input[name="strategy-select"] {
 }
 
 .tab-text h5 {
-  line-height: 2;
+  line-height: 1.5;
   font-weight: 500;
   color: var(--secondary-text);
 }
-.tab-text p {
-  font-size: 13px;
+
+.tab-highlights {
+  list-style: none;
+  padding: 0;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tab-highlights li {
+  font-size: 14px;
   color: var(--secondary-text);
-  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  line-height: 2;
+}
+
+.tab-highlights li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.tab-text ul {
   display: none;
 }
 
@@ -1573,10 +1598,10 @@ input[name="strategy-select"] {
     box-shadow: 0 15px 30px rgba(255, 126, 103, 0.15);
   }
 
-  #strat1:checked ~ .strategy-tabs .item1 .tab-text p,
-  #strat2:checked ~ .strategy-tabs .item2 .tab-text p,
-  #strat3:checked ~ .strategy-tabs .item3 .tab-text p,
-  #strat4:checked ~ .strategy-tabs .item4 .tab-text p {
+  #strat1:checked ~ .strategy-tabs .item1 .tab-text .tab-highlights,
+  #strat2:checked ~ .strategy-tabs .item2 .tab-text .tab-highlights,
+  #strat3:checked ~ .strategy-tabs .item3 .tab-text .tab-highlights,
+  #strat4:checked ~ .strategy-tabs .item4 .tab-text .tab-highlights {
     display: block;
     line-height: 1.5;
   }
