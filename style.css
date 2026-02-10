@@ -1251,6 +1251,14 @@ input[name="strategy-select"] {
   .mockup-img.front {
     transform: translate(40px, 40px) rotate(8deg);
   }
+
+  .pain-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
   .floating-card {
     width: 550px;
     left: calc(50% - 275px);
@@ -1263,6 +1271,80 @@ input[name="strategy-select"] {
 
   .card-top {
     margin-bottom: 0;
+  }
+
+  .strategy {
+    padding: 100px 60px 100px;
+  }
+
+  .section-header h2 {
+    font-size: 42px;
+    text-align: center;
+  }
+  .section-header p {
+    text-align: center;
+  }
+
+  .strategy-container .section-header h2,
+  .strategy-container .section-header p {
+    text-align: left;
+  }
+
+  .strategy-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .strategy-select-container {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+  .strategy .section-header {
+    padding: 0;
+  }
+  .strategy-tabs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: visible;
+    padding: 0;
+  }
+  .tab-item {
+    flex: none;
+    width: 100%;
+    transform-origin: left center;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  #strat1:checked ~ .strategy-container .item1,
+  #strat2:checked ~ .strategy-container .item2,
+  #strat3:checked ~ .strategy-container .item3,
+  #strat4:checked ~ .strategy-container .item4 {
+    transform: scale(1.05) translateX(15px);
+    box-shadow: 0 15px 30px rgba(255, 126, 103, 0.15);
+  }
+
+  #strat1:checked ~ .strategy-tabs .item1 .tab-text .tab-highlights,
+  #strat2:checked ~ .strategy-tabs .item2 .tab-text .tab-highlights,
+  #strat3:checked ~ .strategy-tabs .item3 .tab-text .tab-highlights,
+  #strat4:checked ~ .strategy-tabs .item4 .tab-text .tab-highlights {
+    display: block;
+    line-height: 1.5;
+  }
+
+  .strategy-display {
+    flex: 1;
+    margin-top: 0;
+  }
+  .phone-frame {
+    width: 100%;
+    max-width: 320px;
+  }
+  .dots-indicator {
+    display: none;
   }
 
   .final-cta {
@@ -1460,19 +1542,6 @@ input[name="strategy-select"] {
     margin-bottom: 60px;
   }
 
-  .section-header h2 {
-    font-size: 42px;
-    text-align: center;
-  }
-  .section-header p {
-    text-align: center;
-  }
-
-  .strategy-container .section-header h2,
-  .strategy-container .section-header p {
-    text-align: left;
-  }
-
   .card-container {
     flex-direction: row;
     justify-content: center;
@@ -1560,6 +1629,20 @@ input[name="strategy-select"] {
   .strategy {
     padding: 100px 60px 100px;
   }
+
+  .section-header h2 {
+    font-size: 42px;
+    text-align: center;
+  }
+  .section-header p {
+    text-align: center;
+  }
+
+  .strategy-container .section-header h2,
+  .strategy-container .section-header p {
+    text-align: left;
+  }
+
   .strategy-container {
     max-width: 1200px;
     margin: 0 auto;
