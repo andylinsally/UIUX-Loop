@@ -60,6 +60,7 @@ section {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  width: 100%;
   padding: 0 20px;
 }
 
@@ -104,6 +105,8 @@ section {
 }
 
 .nav-menu {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 70px;
   left: 0;
@@ -111,7 +114,6 @@ section {
   height: 100vh;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0);
-  z-index: 999;
   transition: background-color 0.4s ease;
   pointer-events: none;
   visibility: hidden;
@@ -138,7 +140,7 @@ section {
 .nav-item {
   opacity: 0;
   transform: translateX(-20px);
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 
 .nav-item a {
@@ -147,7 +149,7 @@ section {
   padding: 16px 32px;
   font-size: 18px;
   color: var(--secondary-text);
-  transition: all 0.1s ease;
+  transition: all 0.5s ease;
   text-align: center;
   border-radius: 16px;
 }
@@ -166,7 +168,6 @@ section {
 
 /* 選單狀態連動 */
 .menu-control:checked ~ .nav-menu {
-  display: flex;
   visibility: visible;
   height: calc(100vh - 70px);
   background-color: rgba(0, 0, 0, 0.4);
@@ -225,10 +226,6 @@ section {
   align-items: center;
   margin: 30px auto 0;
   width: 100%;
-}
-
-.navbar > .download-btn {
-  display: none;
 }
 
 .cta-btn {
@@ -762,7 +759,7 @@ input[name="strategy-select"] {
 }
 
 .phone-frame video {
-  width:100%;
+  width: 100%;
   object-fit: cover;
   display: none;
 }
@@ -1193,22 +1190,20 @@ input[name="strategy-select"] {
     margin: 0 auto;
     padding: 0 60px;
     position: relative;
+    gap: 24px;
   }
   .menu-toggle,
   .menu-control {
     display: none;
   }
   .nav-menu {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: auto;
-    width: auto;
-    height: auto;
-    background-color: transparent;
-    visibility: visible;
+    position: relative;
+    top: 0;
+    left: 0;
+    justify-content: center;
     pointer-events: auto;
-    display: block;
+    visibility: visible;
+    width:77%;
   }
   .nav-card {
     background-color: transparent;
@@ -1218,17 +1213,14 @@ input[name="strategy-select"] {
     transition: none;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
   .nav-card .download-btn {
-    display: none;
-  }
-  .navbar > .download-btn {
-    display: flex;
     margin: 0;
-    width: auto;
-    padding: 10px 25px;
-    font-size: 15px;
+    width: fit-content;
+    padding: 12px 24px;
   }
+
   .nav-list {
     display: flex;
     gap: 10px;
@@ -1390,7 +1382,7 @@ input[name="strategy-select"] {
     display: none;
   }
 
-.vision {
+  .vision {
     padding: 100px 60px;
   }
 
@@ -1474,22 +1466,20 @@ input[name="strategy-select"] {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+    justify-content: space-between;
   }
   .menu-toggle,
   .menu-control {
     display: none;
   }
   .nav-menu {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: auto;
-    width: auto;
-    height: auto;
-    background-color: transparent;
-    visibility: visible;
+    position: relative;
+    top: 0;
+    left: 0;
+    justify-content: center;
     pointer-events: auto;
-    display: block;
+    visibility: visible;
+    width:70%;
   }
   .nav-card {
     background-color: transparent;
@@ -1499,17 +1489,14 @@ input[name="strategy-select"] {
     transition: none;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
   .nav-card .download-btn {
-    display: none;
-  }
-  .navbar > .download-btn {
-    display: flex;
     margin: 0;
-    width: auto;
-    padding: 10px 25px;
-    font-size: 15px;
+    width: fit-content;
+    padding: 12px 24px;
   }
+
   .nav-list {
     display: flex;
     gap: 10px;
